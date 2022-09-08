@@ -44,3 +44,57 @@ resource "azurerm_storage_account" "sa" {
     type = "SystemAssigned"
   }
 }
+
+#----------------------------------------------------------------------------------------
+# Containers
+#----------------------------------------------------------------------------------------
+
+resource "azurerm_storage_container" "sc" {
+  for_each = {
+    for sc in local.containers : "${sc.sa_key}.${sc.sc_key}" => sc
+  }
+
+  name                  = each.value.name
+  storage_account_name  = each.value.storage_account_name
+  container_access_type = each.value.container_access_type
+}
+
+#----------------------------------------------------------------------------------------
+# Queues
+#----------------------------------------------------------------------------------------
+
+resource "azurerm_storage_queue" "sq" {
+  for_each = {
+    for sq in local.queues : "${sq.sa_key}.${sq.sq_key}" => sq
+  }
+
+  name                 = each.value.name
+  storage_account_name = each.value.storage_account_name
+}
+
+#----------------------------------------------------------------------------------------
+# shares
+#----------------------------------------------------------------------------------------
+
+resource "azurerm_storage_share" "sh" {
+  for_each = {
+    for fs in local.shares : "${fs.sa_key}.${fs.fs_key}" => fs
+  }
+
+  name                 = each.value.name
+  storage_account_name = each.value.storage_account_name
+  quota                = each.value.quota
+}
+
+#----------------------------------------------------------------------------------------
+# tables
+#----------------------------------------------------------------------------------------
+
+resource "azurerm_storage_table" "st" {
+  for_each = {
+    for st in local.tables : "${st.sa_key}.${st.st_key}" => st
+  }
+
+  name                 = each.value.name
+  storage_account_name = each.value.storage_account_name
+}
