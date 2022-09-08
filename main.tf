@@ -98,3 +98,17 @@ resource "azurerm_storage_table" "st" {
   name                 = each.value.name
   storage_account_name = each.value.storage_account_name
 }
+
+#----------------------------------------------------------------------------------------
+# advanced threat protection
+#----------------------------------------------------------------------------------------
+
+resource "azurerm_advanced_threat_protection" "prot" {
+  for_each = {
+    for sa, defender in var.storage_accounts : sa => defender
+    if defender.enable_protection == "true"
+  }
+
+  target_resource_id = azurerm_storage_account.sa[each.key].id
+  enabled            = each.value.enable_protection
+}
