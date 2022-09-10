@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/dkooll/terraform-azurerm-storageaccount/compare/v1.0.0...v1.0.1) (2022-09-10)
+
+
+### Bug Fixes
+
+* change string to bool when enabling advanced protection ([#7](https://github.com/dkooll/terraform-azurerm-storageaccount/issues/7)) ([6cc0a0d](https://github.com/dkooll/terraform-azurerm-storageaccount/commit/6cc0a0d751ac9ad7c879dda2b391fb7662dad271))
+
 ## 1.0.0 (2022-09-08)
 
 
