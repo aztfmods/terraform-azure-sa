@@ -1,4 +1,4 @@
-![example workflow](https://github.com/aztfmods/terraform-azurerm-sa/actions/workflows/validate.yml/badge.svg)
+![example workflow](https://github.com/aztfmods/module-azurerm-sa/actions/workflows/validate.yml/badge.svg)
 
 # Storage Account
 
@@ -18,7 +18,7 @@ The below examples shows the usage when consuming the module:
 
 ```hcl
 module "storage" {
-  source = "github.com/aztfmods/terraform-azurerm-sa"
+  source = "github.com/aztfmods/module-azurerm-sa"
   version = "1.0.0"
   storage_accounts = {
     sa1 = {
@@ -39,7 +39,7 @@ module "storage" {
 
 ```hcl
 module "storage" {
-  source = "github.com/aztfmods/terraform-azurerm-sa"
+  source = "github.com/aztfmods/module-azurerm-sa"
   storage_accounts = {
     sa1 = {
       location          = "eastus2"
@@ -69,7 +69,7 @@ module "storage" {
 
 ```hcl
 module "storage" {
-  source = "github.com/aztfmods/terraform-azurerm-sa"
+  source = "github.com/aztfmods/module-azurerm-sa"
   storage_accounts = {
     sa1 = {
       location          = "eastus2"
@@ -89,7 +89,7 @@ module "storage" {
 
 ```hcl
 module "storage" {
-  source = "github.com/aztfmods/terraform-azurerm-sa"
+  source = "github.com/aztfmods/module-azurerm-sa"
   storage_accounts = {
     sa1 = {
       location          = "eastus2"
