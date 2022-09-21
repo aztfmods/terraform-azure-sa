@@ -7,8 +7,10 @@ provider "azurerm" {
 #----------------------------------------------------------------------------------------
 
 resource "azurerm_resource_group" "rg" {
-  name     = "rg-storage-${var.env}-001"
-  location = "westeurope"
+  for_each = var.storage_accounts
+
+  name     = each.value.resourcegroup
+  location = each.value.location
 }
 
 #----------------------------------------------------------------------------------------
@@ -32,8 +34,8 @@ resource "random_string" "random" {
 resource "azurerm_storage_account" "sa" {
   for_each = var.storage_accounts
 
-  name                            = "sa${var.env}${each.key}${random_string.random[each.key].result}"
-  resource_group_name             = azurerm_resource_group.rg.name
+  name                            = "sa${each.key}${random_string.random[each.key].result}"
+  resource_group_name             = azurerm_resource_group.rg[each.key].name
   location                        = each.value.location
   account_tier                    = each.value.sku.tier
   account_replication_type        = each.value.sku.type
