@@ -1,4 +1,4 @@
-![example workflow](https://github.com/dkooll/terraform-azurerm-storageaccount/actions/workflows/validate.yml/badge.svg)
+![example workflow](https://github.com/aztfmods/terraform-azurerm-sa/actions/workflows/validate.yml/badge.svg)
 
 # Storage Account
 
@@ -10,6 +10,7 @@ The below features are made available:
 - Multiple shares, tables, containers and queues on each storage account
 - Advanced threat protection
 - Terratest is used to validate different integrations in [examples](examples)
+- The [diagnostics](examples/diagnostic-settings/main.tf) integration enables us to send logs to logging resources.
 
 The below examples shows the usage when consuming the module:
 
@@ -17,11 +18,12 @@ The below examples shows the usage when consuming the module:
 
 ```hcl
 module "storage" {
-  source = "github.com/dkooll/terraform-azurerm-storageaccount"
+  source = "github.com/aztfmods/terraform-azurerm-sa"
   version = "1.0.0"
   storage_accounts = {
     sa1 = {
       location          = "westeurope"
+      resourcegroup     = "rg-storage-weeu"
       enable_protection = "true"
       sku               = { tier = "Standard", type = "GRS" }
       containers = {
@@ -37,11 +39,11 @@ module "storage" {
 
 ```hcl
 module "storage" {
-  source = "github.com/dkooll/terraform-azurerm-storageaccount"
-  version = "1.0.0"
+  source = "github.com/aztfmods/terraform-azurerm-sa"
   storage_accounts = {
     sa1 = {
       location          = "eastus2"
+      resourcegroup     = "rg-storage-eus2"
       enable_protection = "true"
       sku               = { tier = "Standard", type = "GRS" }
       tables = {
@@ -51,10 +53,9 @@ module "storage" {
 
     sa2 = {
       location          = "southeastasia"
-      tier              = "Standard"
-      type              = "GRS"
-      kind              = "StorageV2"
-      enable_protection = "false"
+      resourcegroup     = "rg-storage-sea"
+      enable_protection = "true"
+      sku               = { tier = "Standard", type = "GRS" }
       tables = {
         t1 = {name = "table1"}
         t2 = {name = "table2"}
@@ -68,11 +69,11 @@ module "storage" {
 
 ```hcl
 module "storage" {
-  source = "github.com/dkooll/terraform-azurerm-storageaccount"
-  version = "1.0.0"
+  source = "github.com/aztfmods/terraform-azurerm-sa"
   storage_accounts = {
     sa1 = {
       location          = "eastus2"
+      resourcegroup     = "rg-storage-eus2"
       enable_protection = "false"
       sku               = { tier = "Standard", type = "GRS" }
       queues = {
@@ -88,11 +89,11 @@ module "storage" {
 
 ```hcl
 module "storage" {
-  source = "github.com/dkooll/terraform-azurerm-storageaccount"
-  version = "1.0.0"
+  source = "github.com/aztfmods/terraform-azurerm-sa"
   storage_accounts = {
     sa1 = {
       location          = "eastus2"
+      resourcegroup     = "rg-storage-eus2"
       enable_protection = "false"
       sku               = { tier = "Standard", type = "GRS" }
       shares = {
@@ -102,6 +103,7 @@ module "storage" {
 
     sa2 = {
       location          = "southeastasia"
+      resourcegroup     = "rg-storage-sea"
       enable_protection = "false"
       sku               = { tier = "Standard", type = "GRS" }
       shares = {
@@ -136,12 +138,13 @@ module "storage" {
 
 | Name | Description |
 | :-- | :-- |
-| `storageaccounts` | contains all storage accounts |
+| `sa` | contains all storage accounts |
+| `merged_ids` | contains all vnet, nsg resource id's specified within the object |
 
 ## Authors
 
-Module is maintained by [Dennis Kool](https://github.com/dkooll) with help from [these awesome contributors](https://github.com/dkooll/terraform-azurerm-vnet/graphs/contributors).
+Module is maintained by [Dennis Kool](https://github.com/dkooll) with help from [these awesome contributors](https://github.com/aztfmods/module-azurerm-vnet/graphs/contributors).
 
 ## License
 
-MIT Licensed. See [LICENSE](https://github.com/dkooll/terraform-azurerm-vnet/tree/master/LICENSE) for full details.
+MIT Licensed. See [LICENSE](https://github.com/aztfmods/module-azurerm-vnet/blob/main/LICENSE) for full details.
