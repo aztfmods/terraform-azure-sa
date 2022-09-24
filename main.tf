@@ -5,7 +5,7 @@
 data "azurerm_resource_group" "rg" {
   for_each = var.storage_accounts
 
-  name = each.value.rgname
+  name = each.value.resourcegroup
 }
 
 #----------------------------------------------------------------------------------------

@@ -15,7 +15,7 @@ module "storage" {
   storage_accounts = {
     sa1 = {
       location          = module.rgs.groups.storage.location
-      rgname            = module.rgs.groups.storage.name
+      resourcegroup     = module.rgs.groups.storage.name
       sku               = { tier = "Standard", type = "GRS" }
       enable_protection = true
       containers = {
