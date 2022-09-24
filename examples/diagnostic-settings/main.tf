@@ -11,6 +11,7 @@ module "rgs" {
 
 module "logging" {
   source = "github.com/aztfmods/module-azurerm-law?ref=main"
+  depends_on = [module.rgs]
   laws = {
     diags = {
       location      = module.rgs.groups.storage.location
@@ -23,6 +24,7 @@ module "logging" {
 
 module "storage" {
   source = "../../"
+  depends_on = [module.rgs]
   storage_accounts = {
     sa1 = {
       location          = module.rgs.groups.storage.location
