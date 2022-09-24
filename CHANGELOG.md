@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.1.0](https://github.com/aztfmods/module-azurerm-sa/compare/v1.0.1...v1.1.0) (2022-09-24)
+
+
+### Features
+
+* add more outputs ([#10](https://github.com/aztfmods/module-azurerm-sa/issues/10)) ([dad80f0](https://github.com/aztfmods/module-azurerm-sa/commit/dad80f0213d721e0febc8b82ab3a2b9ac691a3c6))
+* small refactor resourcegroups ([#12](https://github.com/aztfmods/module-azurerm-sa/issues/12)) ([a454bef](https://github.com/aztfmods/module-azurerm-sa/commit/a454bef0d74e9ed3ad7c8832730a87dd38359afa))
+* small update documentation ([#14](https://github.com/aztfmods/module-azurerm-sa/issues/14)) ([b789ecf](https://github.com/aztfmods/module-azurerm-sa/commit/b789ecf35c50d0686c4f4bb3f8b84420c00151a5))
+
 ## [1.0.1](https://github.com/dkooll/terraform-azurerm-storageaccount/compare/v1.0.0...v1.0.1) (2022-09-10)
 
 
