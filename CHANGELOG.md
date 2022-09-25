@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/aztfmods/module-azurerm-sa/compare/v1.1.0...v1.2.0) (2022-09-25)
+
+
+### Features
+
+* add consistent naming ([#16](https://github.com/aztfmods/module-azurerm-sa/issues/16)) ([ad63207](https://github.com/aztfmods/module-azurerm-sa/commit/ad6320798f749f9f71a6daa00015b0c4f615c4b2))
+
 ## [1.1.0](https://github.com/aztfmods/module-azurerm-sa/compare/v1.0.1...v1.1.0) (2022-09-24)
 
 
