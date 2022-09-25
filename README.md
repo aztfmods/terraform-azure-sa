@@ -4,33 +4,32 @@
 
 Terraform module which creates storage account resources on Azure.
 
-The below features are made available:
+The below features and integrations are made available:
 
 - Multiple storage accounts
 - Multiple shares, tables, containers and queues on each storage account
 - Advanced threat protection
 - Terratest is used to validate different integrations in [examples](examples)
-- The [diagnostics](examples/diagnostic-settings/main.tf) integration enables us to send logs to logging resources.
+- [diagnostics](examples/diagnostic-settings/main.tf) logs
 
 The below examples shows the usage when consuming the module:
 
 ## Usage: single storage account multiple containers
 
 ```hcl
-module "rgs" {
-  source = "github.com/aztfmods/module-azurerm-rg"
-  groups = {
-    storage = { name = "rg-sa-weu", location = "westeurope" }
-  }
-}
-
 module "storage" {
-  source     = "../../"
-  depends_on = [module.rgs]
+  source = "../../"
+
+  naming = {
+    company = local.naming.company
+    env     = local.naming.env
+    region  = local.naming.region
+  }
+
   storage_accounts = {
-    sa1 = {
-      location          = module.rgs.groups.storage.location
-      resourcegroup     = module.rgs.groups.storage.name
+    demo = {
+      location          = module.global.groups.storage.location
+      resourcegroup     = module.global.groups.storage.name
       sku               = { tier = "Standard", type = "GRS" }
       enable_protection = true
       containers = {
@@ -39,22 +38,22 @@ module "storage" {
       }
     }
   }
+  depends_on = [module.global]
 }
 ```
 
 ## Usage: multiple storage accounts multiple tables
 
 ```hcl
-module "rgs" {
-  source = "github.com/aztfmods/module-azurerm-rg"
-  groups = {
-    storageeus2 = { name = "rg-sa-eus2", location = "eastus2" }
-    storagesea = { name = "rg-sa-sea", location = "southeastasia" }
-  }
-}
-
 module "storage" {
-  source = "github.com/aztfmods/module-azurerm-sa"
+  source = "../.."
+
+  naming = {
+    company = local.naming.company
+    env     = local.naming.env
+    region  = local.naming.region
+  }
+
   storage_accounts = {
     sa1 = {
       location          = module.rgs.groups.storageeus2.location
@@ -85,15 +84,15 @@ module "storage" {
 ## Usage: single storage account multiple queues
 
 ```hcl
-module "rgs" {
-  source = "github.com/aztfmods/module-azurerm-rg"
-  groups = {
-    storage = { name = "rg-sa-weu", location = "westeurope" }
-  }
-}
-
 module "storage" {
-  source = "github.com/aztfmods/module-azurerm-sa"
+  source = "../.."
+
+  naming = {
+    company = local.naming.company
+    env     = local.naming.env
+    region  = local.naming.region
+  }
+
   storage_accounts = {
     sa1 = {
       location          = module.rgs.groups.storage.location
@@ -112,16 +111,15 @@ module "storage" {
 ## Usage: multiple storage accounts multiple fileshares
 
 ```hcl
-module "rgs" {
-  source = "github.com/aztfmods/module-azurerm-rg"
-  groups = {
-    storageeus = { name = "rg-sa-eus", location = "eastus" }
-    storagesea = { name = "rg-sa-sea", location = "southeastasia" }
-  }
-}
-
 module "storage" {
-  source = "github.com/aztfmods/module-azurerm-sa"
+  source = "../../"
+
+  naming = {
+    company = local.naming.company
+    env     = local.naming.env
+    region  = local.naming.region
+  }
+
   storage_accounts = {
     sa1 = {
       location          = module.rgs.groups.storageeus.location
