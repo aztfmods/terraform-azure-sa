@@ -10,7 +10,7 @@ The below features and integrations are made available:
 - Multiple shares, tables, containers and queues on each storage account
 - Advanced threat protection
 - Terratest is used to validate different integrations in [examples](examples)
-- [diagnostics](examples/diagnostic-settings/main.tf) logs
+- [diagnostic](examples/diagnostic-settings/main.tf) log integration
 
 The below examples shows the usage when consuming the module:
 
