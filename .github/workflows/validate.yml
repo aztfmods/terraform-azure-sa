@@ -11,7 +11,7 @@ on:
 jobs:
   build:
     name: validate
-    uses: aztfmods/module-azurerm-global/.github/workflows/validate.yml@main
+    uses: aztfmods/module-azurerm-global/.github/workflows/validate.yml@feat/add-reusable-workflows
 
 # name: validate
 
