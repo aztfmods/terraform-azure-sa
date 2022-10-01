@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/aztfmods/module-azurerm-sa/compare/v1.2.0...v1.3.0) (2022-10-01)
+
+
+### Features
+
+* add reusable validation workflows ([#18](https://github.com/aztfmods/module-azurerm-sa/issues/18)) ([d5a06f2](https://github.com/aztfmods/module-azurerm-sa/commit/d5a06f2eadd99ab6c6eff75b525d248ff4bd52d6))
+
 ## [1.2.0](https://github.com/aztfmods/module-azurerm-sa/compare/v1.1.0...v1.2.0) (2022-09-25)
 
 
