@@ -51,10 +51,18 @@ module "storage" {
 
   storage_accounts = {
     demo = {
-      location          = module.rgs.groups.storage.location
-      resourcegroup     = module.rgs.groups.storage.name
-      sku               = { tier = "Standard", type = "GRS" }
-      enable_protection = true
+      location      = module.rgs.groups.storage.location
+      resourcegroup = module.rgs.groups.storage.name
+
+      enable = {
+        storage_management_policy  = true
+        advanced_threat_protection = true
+      }
+
+      sku = {
+        tier = "Standard"
+        type = "GRS"
+      }
     }
   }
   depends_on = [module.rgs]
