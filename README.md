@@ -147,7 +147,7 @@ module "storage" {
 }
 ```
 
-## Usage: single storage account with management policy using multiple rules
+## Usage: management policy using multiple rules
 
 ```hcl
 module "storage" {
