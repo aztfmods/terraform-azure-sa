@@ -29,12 +29,12 @@ resource "random_string" "random" {
 resource "azurerm_storage_account" "sa" {
   for_each = var.storage_accounts
 
-  name                             = "sa${var.naming.company}${each.key}${var.naming.env}${var.naming.region}${random_string.random[each.key].result}"
-  resource_group_name              = data.azurerm_resource_group.rg[each.key].name
-  location                         = data.azurerm_resource_group.rg[each.key].location
-  account_tier                     = each.value.sku.tier
-  account_replication_type         = each.value.sku.type
-  account_kind                     = "StorageV2"
+  name                     = "sa${var.naming.company}${each.key}${var.naming.env}${var.naming.region}${random_string.random[each.key].result}"
+  resource_group_name      = data.azurerm_resource_group.rg[each.key].name
+  location                 = data.azurerm_resource_group.rg[each.key].location
+  account_tier             = each.value.sku.tier
+  account_replication_type = each.value.sku.type
+  account_kind             = "StorageV2"
 
   allow_nested_items_to_be_public  = try(each.value.enable.allow_public_nested_items, true)
   shared_access_key_enabled        = try(each.value.enable.shared_access_key, true)
