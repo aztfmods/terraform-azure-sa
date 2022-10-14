@@ -33,7 +33,11 @@ module "storage" {
     demo = {
       location      = module.global.groups.storage.location
       resourcegroup = module.global.groups.storage.name
-      enable        = { protection = true, mgtpolicy = true }
+
+      enable = {
+        storage_management_policy  = true
+        advanced_threat_protection = true
+      }
 
       sku = {
         tier = "Standard"

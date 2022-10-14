@@ -29,13 +29,19 @@ resource "random_string" "random" {
 resource "azurerm_storage_account" "sa" {
   for_each = var.storage_accounts
 
-  name                            = "sa${var.naming.company}${each.key}${var.naming.env}${var.naming.region}${random_string.random[each.key].result}"
-  resource_group_name             = data.azurerm_resource_group.rg[each.key].name
-  location                        = data.azurerm_resource_group.rg[each.key].location
-  account_tier                    = each.value.sku.tier
-  account_replication_type        = each.value.sku.type
-  account_kind                    = "StorageV2"
-  allow_nested_items_to_be_public = false
+  name                             = "sa${var.naming.company}${each.key}${var.naming.env}${var.naming.region}${random_string.random[each.key].result}"
+  resource_group_name              = data.azurerm_resource_group.rg[each.key].name
+  location                         = data.azurerm_resource_group.rg[each.key].location
+  account_tier                     = each.value.sku.tier
+  account_replication_type         = each.value.sku.type
+  account_kind                     = "StorageV2"
+
+  allow_nested_items_to_be_public  = try(each.value.enable.allow_public_nested_items, true)
+  shared_access_key_enabled        = try(each.value.enable.shared_access_key, true)
+  public_network_access_enabled    = try(each.value.enable.public_network_access, false)
+  is_hns_enabled                   = try(each.value.enable.is_hns, false)
+  nfsv3_enabled                    = try(each.value.enable.nfsv3, false)
+  cross_tenant_replication_enabled = try(each.value.enable.cross_tenant_replication, true)
 
   blob_properties {
     last_access_time_enabled = true
@@ -107,7 +113,7 @@ resource "azurerm_storage_table" "st" {
 resource "azurerm_storage_management_policy" "mgmt_policy" {
   for_each = {
     for sa, mgt_policy in var.storage_accounts : sa => mgt_policy
-    if mgt_policy.enable.mgtpolicy == true
+    if try(mgt_policy.enable.storage_management_policy, false) == true
   }
 
   storage_account_id = azurerm_storage_account.sa[each.key].id
@@ -183,9 +189,9 @@ resource "azurerm_storage_management_policy" "mgmt_policy" {
 resource "azurerm_advanced_threat_protection" "prot" {
   for_each = {
     for sa, defender in var.storage_accounts : sa => defender
-    if defender.enable.protection == true
+    if try(defender.enable.advanced_threat_protection, false) == true
   }
 
   target_resource_id = azurerm_storage_account.sa[each.key].id
-  enabled            = each.value.enable.protection
+  enabled            = each.value.enable.advanced_threat_protection
 }
