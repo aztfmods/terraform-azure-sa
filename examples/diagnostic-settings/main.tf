@@ -51,8 +51,8 @@ module "storage" {
 
   storage_accounts = {
     demo = {
-      location          = module.rgs.groups.storage.location
-      resourcegroup     = module.rgs.groups.storage.name
+      location      = module.rgs.groups.storage.location
+      resourcegroup = module.rgs.groups.storage.name
 
       enable = {
         storage_management_policy  = true
