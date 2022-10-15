@@ -31,7 +31,11 @@ module "storage" {
     demo = {
       location      = module.global.groups.storage.location
       resourcegroup = module.global.groups.storage.name
-      enable        = { protection = true, mgtpolicy = true }
+
+      enable = {
+        storage_management_policy  = true
+        advanced_threat_protection = true
+      }
 
       sku = {
         tier = "Standard"
@@ -64,7 +68,11 @@ module "storage" {
     sa1 = {
       location      = module.rgs.groups.storageeus2.location
       resourcegroup = module.rgs.groups.storageeus2.name
-      enable        = { protection = true, mgtpolicy = true }
+
+      enable = {
+        storage_management_policy  = true
+        advanced_threat_protection = true
+      }
 
       sku = {
         tier = "Standard"
@@ -79,7 +87,11 @@ module "storage" {
     sa2 = {
       location      = module.rgs.groups.storagesea.location
       resourcegroup = module.rgs.groups.storagesea.name
-      enable        = { protection = true, mgtpolicy = true }
+
+      enable = {
+        storage_management_policy  = true
+        advanced_threat_protection = true
+      }
 
       sku = {
         tier = "Standard"
@@ -111,7 +123,11 @@ module "storage" {
     sa1 = {
       location      = module.rgs.groups.storage.location
       resourcegroup = module.rgs.groups.storage.name
-      enable        = { protection = true, mgtpolicy = true }
+
+      enable = {
+        storage_management_policy  = true
+        advanced_threat_protection = true
+      }
 
       sku = {
         tier = "Standard"
@@ -143,7 +159,11 @@ module "storage" {
     sa1 = {
       location      = module.rgs.groups.storageeus.location
       resourcegroup = module.rgs.groups.storageeus.name
-      enable        = { protection = true, mgtpolicy = true }
+
+      enable = {
+        storage_management_policy  = true
+        advanced_threat_protection = true
+      }
 
       sku = {
         tier = "Standard"
@@ -158,7 +178,11 @@ module "storage" {
     sa2 = {
       location      = module.rgs.groups.storagesea.location
       resourcegroup = module.rgs.groups.storageesea.name
-      enable        = { protection = true, mgtpolicy = true }
+
+      enable = {
+        storage_management_policy  = true
+        advanced_threat_protection = true
+      }
 
       sku = {
         tier = "Standard"
@@ -190,7 +214,11 @@ module "storage" {
     sa1 = {
       location      = module.global.groups.storage.location
       resourcegroup = module.global.groups.storage.name
-      enable        = { protection = true, mgtpolicy = true }
+
+      enable = {
+        storage_management_policy  = true
+        advanced_threat_protection = true
+      }
 
       sku = {
         tier = "Standard"
