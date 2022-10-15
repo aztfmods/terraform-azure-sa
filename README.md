@@ -273,18 +273,25 @@ module "storage" {
 | [azurerm_storage_management_policy](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_management_policy) | resource |
 | [azurerm_advanced_threat_protection](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/advanced_threat_protection) | resource |
 
+## Data Sources
+
+| Name | Type |
+| :-- | :-- |
+| [azurerm_resource_group](https://registry.terraform.io/providers/hashicorp/azurerm/1.39.0/docs/data-sources/resource_group) | datasource |
+
 ## Inputs
 
 | Name | Description | Type | Required |
 | :-- | :-- | :-- | :-- |
 | `storage_accounts` | describes storage related configuration | object | yes |
+| `naming` | contains naming convention | string | yes |
 
 ## Outputs
 
 | Name | Description |
 | :-- | :-- |
 | `sa` | contains all storage accounts |
-| `merged_ids` | contains all resource id's specified within the object |
+| `merged_ids` | contains all resource id's specified within the module |
 
 ## Authors
 
