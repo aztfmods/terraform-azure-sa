@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.4.0](https://github.com/aztfmods/module-azurerm-sa/compare/v1.3.0...v1.4.0) (2022-10-14)
+
+
+### Features
+
+* add management policy support ([#20](https://github.com/aztfmods/module-azurerm-sa/issues/20)) ([86d5634](https://github.com/aztfmods/module-azurerm-sa/commit/86d563422e62c4965a1a83f427bb9a5a78f40590))
+* add more optional arguments ([#23](https://github.com/aztfmods/module-azurerm-sa/issues/23)) ([76fedab](https://github.com/aztfmods/module-azurerm-sa/commit/76fedaba3add21412f64d3c9566321e546eb4c5f))
+
 ## [1.3.0](https://github.com/aztfmods/module-azurerm-sa/compare/v1.2.0...v1.3.0) (2022-10-01)
 
 
