@@ -9,7 +9,7 @@ The below features and integrations are made available:
 - multiple storage accounts
 - multiple [shares](#usage-multiple-storage-accounts-multiple-fileshares), [tables](#usage-multiple-storage-accounts-multiple-tables), [containers](#usage-single-storage-account-multiple-containers) and [queues](#usage-single-storage-account-multiple-queues) on each storage account
 - advanced threat protection
-- optional management policies using multiple rules
+- [management policies](#usage-management-policy-using-multiple-rules) using multiple rules
 - [terratest](https://terratest.gruntwork.io) is used to validate different integrations
 - [diagnostic](examples/diagnostic-settings/main.tf) logs integration
 
