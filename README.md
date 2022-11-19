@@ -8,14 +8,14 @@ The below features and integrations are made available:
 
 - multiple storage accounts
 - advanced threat protection
-- [shares](#usage-multiple-storage-accounts-multiple-fileshares), [tables](#usage-multiple-storage-accounts-multiple-tables), [containers](#usage-single-storage-account-multiple-containers), [queues](#usage-single-storage-account-multiple-queues) support on each storage account
+- [shares](#usage-multiple-fileshares), [tables](#usage-multiple-tables), [containers](#usage-multiple-containers), [queues](#multiple-queues) support on each storage account
 - [management policies](#usage-management-policy-using-multiple-rules) using multiple rules
 - [terratest](https://terratest.gruntwork.io) is used to validate different integrations
 - [diagnostic](examples/diagnostic-settings/main.tf) logs integration
 
 The below examples shows the usage when consuming the module:
 
-## Usage: single storage account multiple containers
+## Usage: multiple containers
 
 ```hcl
 module "storage" {
@@ -52,7 +52,7 @@ module "storage" {
 }
 ```
 
-## Usage: multiple storage accounts multiple tables
+## Usage: multiple tables
 
 ```hcl
 module "storage" {
@@ -83,31 +83,12 @@ module "storage" {
         t1 = {name = "table1"}
         t2 = {name = "table2"}
       }
-
-    sa2 = {
-      location      = module.rgs.groups.storagesea.location
-      resourcegroup = module.rgs.groups.storagesea.name
-
-      enable = {
-        storage_management_policy  = true
-        advanced_threat_protection = true
-      }
-
-      sku = {
-        tier = "Standard"
-        type = "GRS"
-      }
-
-      tables = {
-        t1 = {name = "table1"}
-        t2 = {name = "table2"}
-      }
     }
   }
 }
 ```
 
-## Usage: single storage account multiple queues
+## Usage: multiple queues
 
 ```hcl
 module "storage" {
@@ -143,7 +124,7 @@ module "storage" {
 }
 ```
 
-## Usage: multiple storage accounts multiple fileshares
+## Usage: multiple fileshares
 
 ```hcl
 module "storage" {
@@ -172,25 +153,6 @@ module "storage" {
 
       shares = {
         fs1 = {name = "smbfileshare1",quota = 50}
-        fs2 = {name = "smbfileshare2",quota = 10}
-      }
-
-    sa2 = {
-      location      = module.rgs.groups.storagesea.location
-      resourcegroup = module.rgs.groups.storageesea.name
-
-      enable = {
-        storage_management_policy  = true
-        advanced_threat_protection = true
-      }
-
-      sku = {
-        tier = "Standard"
-        type = "GRS"
-      }
-
-      shares = {
-        fs1 = {name = "smbfileshare1",quota = 5}
         fs2 = {name = "smbfileshare2",quota = 10}
       }
     }
