@@ -6,6 +6,8 @@ on:
       - main
     paths-ignore:
       - 'README.md'
+      - '.github/workflows/validate.yml'
+      - '.github/settings.yml'
   workflow_dispatch:
 
 jobs:
