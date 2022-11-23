@@ -32,3 +32,6 @@ labels:
   - name: 'autorelease: pending'
     color: '#3A51D2'
     description: 'autorelease: pending'
+  - name: 'missing functionality'
+    color: '#D4C5F9'
+    description: 'missing functionality'
