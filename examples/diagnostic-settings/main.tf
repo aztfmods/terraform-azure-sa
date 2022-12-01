@@ -65,7 +65,7 @@ module "storage" {
       }
     }
   }
-  depends_on = [module.rgs]
+  depends_on = [module.global]
 }
 
 module "diagnostic_settings" {
