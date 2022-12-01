@@ -38,7 +38,7 @@ resource "azurerm_storage_account" "sa" {
 
   allow_nested_items_to_be_public  = try(each.value.enable.allow_public_nested_items, true)
   shared_access_key_enabled        = try(each.value.enable.shared_access_key, true)
-  public_network_access_enabled    = try(each.value.enable.public_network_access, false)
+  public_network_access_enabled    = try(each.value.enable.public_network_access, true)
   is_hns_enabled                   = try(each.value.enable.is_hns, false)
   nfsv3_enabled                    = try(each.value.enable.nfsv3, false)
   cross_tenant_replication_enabled = try(each.value.enable.cross_tenant_replication, true)
