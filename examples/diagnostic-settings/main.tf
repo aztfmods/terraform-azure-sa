@@ -37,7 +37,7 @@ module "logging" {
       retention     = 30
     }
   }
-  depends_on = [module.rgs]
+  depends_on = [module.global]
 }
 
 module "storage" {
