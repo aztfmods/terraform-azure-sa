@@ -34,9 +34,19 @@ module "storage" {
       location      = module.global.groups.storage.location
       resourcegroup = module.global.groups.storage.name
 
+      enable = {
+        storage_management_policy  = true
+        advanced_threat_protection = true
+      }
+
       sku = {
         tier = "Standard"
         type = "GRS"
+      }
+
+      containers = {
+        sc1 = { name = "mystore250", access_type = "private" }
+        sc2 = { name = "mystore251", access_type = "private" }
       }
     }
   }
