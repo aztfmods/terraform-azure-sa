@@ -55,7 +55,6 @@ module "storage" {
       resourcegroup = module.global.groups.storage.name
 
       enable = {
-        storage_management_policy  = true
         advanced_threat_protection = true
       }
 
