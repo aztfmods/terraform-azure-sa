@@ -278,4 +278,4 @@ MIT Licensed. See [LICENSE](https://github.com/aztfmods/module-azurerm-vnet/blob
 ## Reference
 
 - [Virtual Network Documentation - Microsoft docs](https://learn.microsoft.com/en-us/azure/storage)
-- [Virtual Network Rest Api - Microsoft docs](hhttps://learn.microsoft.com/en-us/rest/api/storagerp/storage-accounts)
+- [Virtual Network Rest Api - Microsoft docs](https://learn.microsoft.com/en-us/rest/api/storagerp/storage-accounts)
