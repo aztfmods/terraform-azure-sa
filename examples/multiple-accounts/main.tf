@@ -13,9 +13,14 @@ locals {
 module "global" {
   source = "github.com/aztfmods/module-azurerm-global"
   rgs = {
-    storage = {
+    rg1 = {
       name     = "rg-${local.naming.company}-storage-${local.naming.env}-${local.naming.region}"
       location = "westeurope"
+    }
+
+    rg2 = {
+      name     = "rg-${local.naming.company}-storage-${local.naming.env}-${local.naming.region}"
+      location = "southeastasia"
     }
   }
 }
@@ -30,9 +35,19 @@ module "storage" {
   }
 
   storage_accounts = {
-    demo = {
-      location      = module.global.groups.storage.location
-      resourcegroup = module.global.groups.storage.name
+    demo1 = {
+      location      = module.global.groups.rg1.location
+      resourcegroup = module.global.groups.rg1.name
+
+      sku = {
+        tier = "Standard"
+        type = "GRS"
+      }
+    }
+
+    demo2 = {
+      location      = module.global.groups.rg2.location
+      resourcegroup = module.global.groups.rg2.name
 
       sku = {
         tier = "Standard"

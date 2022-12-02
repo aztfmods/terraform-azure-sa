@@ -20,26 +20,6 @@ module "global" {
   }
 }
 
-module "logging" {
-  source = "github.com/aztfmods/module-azurerm-law"
-
-  naming = {
-    company = local.naming.company
-    env     = local.naming.env
-    region  = local.naming.region
-  }
-
-  laws = {
-    diags = {
-      location      = module.global.groups.storage.location
-      resourcegroup = module.global.groups.storage.name
-      sku           = "PerGB2018"
-      retention     = 30
-    }
-  }
-  depends_on = [module.global]
-}
-
 module "storage" {
   source = "../../"
 
@@ -54,23 +34,16 @@ module "storage" {
       location      = module.global.groups.storage.location
       resourcegroup = module.global.groups.storage.name
 
-      enable = {
-        advanced_threat_protection = true
-      }
-
       sku = {
         tier = "Standard"
         type = "GRS"
       }
+
+      containers = {
+        sc1 = { name = "mystore250", access_type = "private" }
+        sc2 = { name = "mystore251", access_type = "private" }
+      }
     }
   }
   depends_on = [module.global]
-}
-
-module "diagnostic_settings" {
-  source = "github.com/aztfmods/module-azurerm-diags"
-  count  = length(module.storage.merged_ids)
-
-  resource_id           = element(module.storage.merged_ids, count.index)
-  logs_destinations_ids = [lookup(module.logging.laws.diags, "id", null)]
 }

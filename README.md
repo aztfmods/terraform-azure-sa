@@ -6,16 +6,16 @@ Terraform module which creates storage account resources on Azure.
 
 The below features and integrations are made available:
 
-- multiple storage accounts
-- advanced threat protection
-- [shares](#usage-multiple-fileshares), [tables](#usage-multiple-tables), [containers](#usage-multiple-containers), [queues](#usage-multiple-queues) support on each storage account
+- [multiple](examples/multiple-accounts/main.tf) storage accounts
+- [shares](#usage-fileshares), [tables](#usage-tables), [containers](examples/containers/main.tf), [queues](#usage-queues) support on each storage account
 - [management policies](#usage-management-policy-using-multiple-rules) using multiple rules
 - [terratest](https://terratest.gruntwork.io) is used to validate different integrations
 - [diagnostic](examples/diagnostic-settings/main.tf) logs integration
+- advanced threat protection
 
 The below examples shows the usage when consuming the module:
 
-## Usage: multiple containers
+## Usage: containers
 
 ```hcl
 module "storage" {
@@ -33,7 +33,6 @@ module "storage" {
       resourcegroup = module.global.groups.storage.name
 
       enable = {
-        storage_management_policy  = true
         advanced_threat_protection = true
       }
 
@@ -52,7 +51,7 @@ module "storage" {
 }
 ```
 
-## Usage: multiple tables
+## Usage: tables
 
 ```hcl
 module "storage" {
@@ -69,11 +68,6 @@ module "storage" {
       location      = module.rgs.groups.storageeus2.location
       resourcegroup = module.rgs.groups.storageeus2.name
 
-      enable = {
-        storage_management_policy  = true
-        advanced_threat_protection = true
-      }
-
       sku = {
         tier = "Standard"
         type = "GRS"
@@ -88,7 +82,7 @@ module "storage" {
 }
 ```
 
-## Usage: multiple queues
+## Usage: queues
 
 ```hcl
 module "storage" {
@@ -105,11 +99,6 @@ module "storage" {
       location      = module.rgs.groups.storage.location
       resourcegroup = module.rgs.groups.storage.name
 
-      enable = {
-        storage_management_policy  = true
-        advanced_threat_protection = true
-      }
-
       sku = {
         tier = "Standard"
         type = "GRS"
@@ -124,7 +113,7 @@ module "storage" {
 }
 ```
 
-## Usage: multiple fileshares
+## Usage: fileshares
 
 ```hcl
 module "storage" {
@@ -140,11 +129,6 @@ module "storage" {
     sa1 = {
       location      = module.rgs.groups.storageeus.location
       resourcegroup = module.rgs.groups.storageeus.name
-
-      enable = {
-        storage_management_policy  = true
-        advanced_threat_protection = true
-      }
 
       sku = {
         tier = "Standard"
@@ -290,3 +274,8 @@ Module is maintained by [Dennis Kool](https://github.com/dkooll) with help from 
 ## License
 
 MIT Licensed. See [LICENSE](https://github.com/aztfmods/module-azurerm-vnet/blob/main/LICENSE) for full details.
+
+## Reference
+
+- [Virtual Network Documentation - Microsoft docs](https://learn.microsoft.com/en-us/azure/storage)
+- [Virtual Network Rest Api - Microsoft docs](https://learn.microsoft.com/en-us/rest/api/storagerp/storage-accounts)
