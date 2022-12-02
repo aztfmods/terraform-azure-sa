@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.5.0](https://github.com/aztfmods/module-azurerm-sa/compare/v1.4.0...v1.5.0) (2022-12-02)
+
+
+### Features
+
+* add initial probot config ([#25](https://github.com/aztfmods/module-azurerm-sa/issues/25)) ([18e9f15](https://github.com/aztfmods/module-azurerm-sa/commit/18e9f15b1271d99c17e36963820a395e80479d3a))
+* add more examples ([#42](https://github.com/aztfmods/module-azurerm-sa/issues/42)) ([b3bb550](https://github.com/aztfmods/module-azurerm-sa/commit/b3bb5503248f9a1cd496beaf6c6bd1397fa6de1a))
+
 ## [1.4.0](https://github.com/aztfmods/module-azurerm-sa/compare/v1.3.0...v1.4.0) (2022-10-14)
 
 
