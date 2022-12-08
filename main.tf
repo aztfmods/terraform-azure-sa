@@ -32,9 +32,9 @@ resource "azurerm_storage_account" "sa" {
   name                     = "sa${var.company}${each.key}${var.env}${var.region}${random_string.random[each.key].result}"
   resource_group_name      = data.azurerm_resource_group.rg[each.key].name
   location                 = data.azurerm_resource_group.rg[each.key].location
-  account_tier             = each.value.sku.tier
-  account_replication_type = each.value.sku.type
-  account_kind             = "StorageV2"
+  account_tier             = try(each.value.sku.tier, "Standard")
+  account_replication_type = try(each.value.sku.type, "GRS")
+  account_kind             = try(each.value.kind, "StorageV2")
 
   allow_nested_items_to_be_public  = try(each.value.enable.allow_public_nested_items, true)
   shared_access_key_enabled        = try(each.value.enable.shared_access_key, true)
