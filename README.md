@@ -8,7 +8,7 @@ The below features and integrations are made available:
 
 - [multiple](examples/multiple-accounts/main.tf) storage accounts
 - [shares](#usage-fileshares), [tables](#usage-tables), [containers](examples/containers/main.tf), [queues](#usage-queues) support on each storage account
-- [management policies](#usage-management-policy-using-multiple-rules) using multiple rules
+- [management policies](examples/management-policies/main.tf) using multiple rules
 - [terratest](https://terratest.gruntwork.io) is used to validate different integrations
 - [diagnostic](examples/diagnostic-settings/main.tf) logs integration
 - advanced threat protection
@@ -144,7 +144,7 @@ module "storage" {
 }
 ```
 
-## Usage: management policy using multiple rules
+## Usage: management policy
 
 ```hcl
 module "storage" {
@@ -277,5 +277,5 @@ MIT Licensed. See [LICENSE](https://github.com/aztfmods/module-azurerm-vnet/blob
 
 ## Reference
 
-- [Virtual Network Documentation - Microsoft docs](https://learn.microsoft.com/en-us/azure/storage)
-- [Virtual Network Rest Api - Microsoft docs](https://learn.microsoft.com/en-us/rest/api/storagerp/storage-accounts)
+- [Storage Documentation - Microsoft docs](https://learn.microsoft.com/en-us/azure/storage)
+- [Storage Accounts Rest Api - Microsoft docs](https://learn.microsoft.com/en-us/rest/api/storagerp/storage-accounts)
