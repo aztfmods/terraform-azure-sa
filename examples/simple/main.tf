@@ -25,6 +25,11 @@ module "storage" {
     demo = {
       location      = module.global.groups.demo.location
       resourcegroup = module.global.groups.demo.name
+
+      enable = {
+        sftp   = true
+        is_hns = true
+      }
     }
   }
   depends_on = [module.global]

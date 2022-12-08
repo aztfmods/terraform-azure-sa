@@ -43,6 +43,12 @@ resource "azurerm_storage_account" "sa" {
   nfsv3_enabled                    = try(each.value.enable.nfsv3, false)
   cross_tenant_replication_enabled = try(each.value.enable.cross_tenant_replication, true)
 
+  sftp_enabled = (
+    try(each.value.enable.is_hns, false) == false ?
+    try(each.value.enable.sftp, false)
+    : true
+  )
+
   blob_properties {
     last_access_time_enabled = true
   }
