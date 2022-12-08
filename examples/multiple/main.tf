@@ -10,7 +10,8 @@ module "global" {
   region  = "weu"
 
   rgs = {
-    demo = { location = "westeurope" }
+    demo  = { location = "westeurope" }
+    demo2 = { location = "southeastasia" }
   }
 }
 
@@ -22,9 +23,19 @@ module "storage" {
   region  = module.global.region
 
   storage_accounts = {
-    demo = {
+    demo1 = {
       location      = module.global.groups.demo.location
       resourcegroup = module.global.groups.demo.name
+
+      sku = {
+        tier = "Standard"
+        type = "GRS"
+      }
+    }
+
+    demo2 = {
+      location      = module.global.groups.demo2.location
+      resourcegroup = module.global.groups.demo2.name
 
       sku = {
         tier = "Standard"
