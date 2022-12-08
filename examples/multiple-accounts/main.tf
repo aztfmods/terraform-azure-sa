@@ -2,42 +2,30 @@ provider "azurerm" {
   features {}
 }
 
-locals {
-  naming = {
-    company = "cn"
-    env     = "p"
-    region  = "weu"
-  }
-}
-
 module "global" {
   source = "github.com/aztfmods/module-azurerm-global"
-  rgs = {
-    rg1 = {
-      name     = "rg-${local.naming.company}-storage-${local.naming.env}-${local.naming.region}"
-      location = "westeurope"
-    }
 
-    rg2 = {
-      name     = "rg-${local.naming.company}-storage-${local.naming.env}-${local.naming.region}"
-      location = "southeastasia"
-    }
+  company = "cn"
+  env     = "p"
+  region  = "weu"
+
+  rgs = {
+    demo  = { location = "westeurope" }
+    demo2 = { location = "southeastasia"}
   }
 }
 
 module "storage" {
   source = "../../"
 
-  naming = {
-    company = local.naming.company
-    env     = local.naming.env
-    region  = local.naming.region
-  }
+  company = module.global.company
+  env     = module.global.env
+  region  = module.global.region
 
   storage_accounts = {
     demo1 = {
-      location      = module.global.groups.rg1.location
-      resourcegroup = module.global.groups.rg1.name
+      location      = module.global.groups.demo.location
+      resourcegroup = module.global.groups.demo.name
 
       sku = {
         tier = "Standard"
@@ -46,8 +34,8 @@ module "storage" {
     }
 
     demo2 = {
-      location      = module.global.groups.rg2.location
-      resourcegroup = module.global.groups.rg2.name
+      location      = module.global.groups.demo2.location
+      resourcegroup = module.global.groups.demo2.name
 
       sku = {
         tier = "Standard"
