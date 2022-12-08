@@ -25,11 +25,6 @@ module "storage" {
     demo = {
       location      = module.global.groups.demo.location
       resourcegroup = module.global.groups.demo.name
-
-      sku = {
-        tier = "Standard"
-        type = "GRS"
-      }
     }
   }
   depends_on = [module.global]
