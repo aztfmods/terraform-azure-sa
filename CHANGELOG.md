@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.6.0](https://github.com/aztfmods/module-azurerm-sa/compare/v1.5.0...v1.6.0) (2022-12-08)
+
+
+### Features
+
+* set defaults for account_tier, account_replication_type and account_kind arguments ([#48](https://github.com/aztfmods/module-azurerm-sa/issues/48)) ([bff3c50](https://github.com/aztfmods/module-azurerm-sa/commit/bff3c5018e547d95ad44e1dc95ed1c4ed0fe14b4))
+* small refactor naming convention ([#46](https://github.com/aztfmods/module-azurerm-sa/issues/46)) ([59bf0d6](https://github.com/aztfmods/module-azurerm-sa/commit/59bf0d6e6ef034ba9cf73a9400176d38ae327bed))
+
 ## [1.5.0](https://github.com/aztfmods/module-azurerm-sa/compare/v1.4.0...v1.5.0) (2022-12-02)
 
 
