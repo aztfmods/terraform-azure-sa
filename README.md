@@ -1,6 +1,6 @@
 ![example workflow](https://github.com/aztfmods/module-azurerm-sa/actions/workflows/validate.yml/badge.svg)
 ![example workflow](https://img.shields.io/github/v/release/aztfmods/module-azurerm-sa)
-![GitHub issues](https://img.shields.io/github/issues-raw/aztfmods/module-azurerm-sa?color=green)
+![GitHub issues](https://img.shields.io/github/issues-raw/aztfmods/module-azurerm-sa)
 
 # Storage Account
 
