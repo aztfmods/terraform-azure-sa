@@ -50,7 +50,25 @@ resource "azurerm_storage_account" "sa" {
   )
 
   blob_properties {
-    last_access_time_enabled = true
+    last_access_time_enabled      = try(each.value.blob_service.enable.last_access_time, false)
+    versioning_enabled            = try(each.value.blob_service.enable.versioning, false)
+    change_feed_enabled           = try(each.value.blob_service.enable.change_feed, false)
+    change_feed_retention_in_days = try(each.value.blob_service.change_feed_retention_in_days, null)
+    default_service_version       = try(each.value.blob_service.default_service_version, "2020-06-12")
+
+    dynamic "cors_rule" {
+      for_each = {
+        for k, v in try(each.value.blob_service.cors_rules, {}) : k => v
+      }
+
+      content {
+        allowed_headers    = cors_rule.value.allowed_headers
+        allowed_methods    = cors_rule.value.allowed_methods
+        allowed_origins    = cors_rule.value.allowed_origins
+        exposed_headers    = cors_rule.value.exposed_headers
+        max_age_in_seconds = cors_rule.value.max_age_in_seconds
+      }
+    }
   }
 
   identity {

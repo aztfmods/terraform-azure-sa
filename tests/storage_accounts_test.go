@@ -10,7 +10,8 @@ func TestApplyNoError(t *testing.T) {
 	t.Parallel()
 
 	tests := []string{
-		"../examples/simple",
+		"../examples/cors",
+		//"../examples/simple",
 		//"../examples/multiple",
 		//"../examples/management-policies",
 		//"../examples/containers",
