@@ -12,6 +12,7 @@ The below features and integrations are made available:
 - [management policies](examples/management-policies/main.tf) using multiple rules
 - [terratest](https://terratest.gruntwork.io) is used to validate different integrations
 - [diagnostic](examples/diagnostic-settings/main.tf) logs integration
+- [cors](examples/cors/main.tf) rules support on blob services
 - advanced threat protection
 
 The below examples shows the usage when consuming the module:
@@ -225,6 +226,40 @@ module "storage" {
                 }
               }
             }
+          }
+        }
+      }
+    }
+  }
+  depends_on = [module.global]
+}
+```
+
+## Usage: cors rules
+
+```hcl
+module "storage" {
+  source = "../../"
+
+  company = module.global.company
+  env     = module.global.env
+  region  = module.global.region
+
+  storage_accounts = {
+    demo = {
+      location      = module.global.groups.demo.location
+      resourcegroup = module.global.groups.demo.name
+
+      blob_service = {
+        enable = { versioning = true, last_access_time = true, change_feed = true }
+
+        cors_rules = {
+          rule1 = {
+            allowed_headers    = ["x-ms-meta-data*", "x-ms-meta-target*"]
+            allowed_methods    = ["POST", "GET"]
+            allowed_origins    = ["http://www.fabrikam.com"]
+            exposed_headers    = ["x-ms-meta-*"]
+            max_age_in_seconds = "200"
           }
         }
       }
