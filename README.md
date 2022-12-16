@@ -294,7 +294,9 @@ module "storage" {
 | Name | Description | Type | Required |
 | :-- | :-- | :-- | :-- |
 | `storage_accounts` | describes storage related configuration | object | yes |
-| `naming` | contains naming convention | string | yes |
+| `company` | contains the company name used, for naming convention	| string | yes |
+| `region` | contains the shortname of the region, used for naming convention	| string | yes |
+| `env` | contains shortname of the environment used for naming convention	| string | yes |
 
 ## Outputs
 
@@ -311,7 +313,7 @@ Module is maintained by [Dennis Kool](https://github.com/dkooll) with help from 
 
 MIT Licensed. See [LICENSE](https://github.com/aztfmods/module-azurerm-vnet/blob/main/LICENSE) for full details.
 
-## Reference
+## References
 
 - [Storage Documentation - Microsoft docs](https://learn.microsoft.com/en-us/azure/storage)
 - [Storage Accounts Rest Api - Microsoft docs](https://learn.microsoft.com/en-us/rest/api/storagerp/storage-accounts)
