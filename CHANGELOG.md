@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.7.0](https://github.com/aztfmods/module-azurerm-sa/compare/v1.6.0...v1.7.0) (2022-12-17)
+
+
+### Features
+
+* add blob_properties and cors_rule support ([#52](https://github.com/aztfmods/module-azurerm-sa/issues/52)) ([f84bcb9](https://github.com/aztfmods/module-azurerm-sa/commit/f84bcb90801808bfbb211617e228fb5d162718e7))
+* add delete_retention_policy, container_delete_retention_policy and restore_policy support for blob service ([#55](https://github.com/aztfmods/module-azurerm-sa/issues/55)) ([33dfc81](https://github.com/aztfmods/module-azurerm-sa/commit/33dfc819f10d93c9aa83d5ceaf0f297c8a913600))
+* add sftp_enabled support using conditional expressions ([#49](https://github.com/aztfmods/module-azurerm-sa/issues/49)) ([b4b3245](https://github.com/aztfmods/module-azurerm-sa/commit/b4b3245a3cee2c1192295c76d2f5d3bfec5da266))
+
 ## [1.6.0](https://github.com/aztfmods/module-azurerm-sa/compare/v1.5.0...v1.6.0) (2022-12-08)
 
 
