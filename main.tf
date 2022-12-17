@@ -69,6 +69,18 @@ resource "azurerm_storage_account" "sa" {
         max_age_in_seconds = cors_rule.value.max_age_in_seconds
       }
     }
+
+    delete_retention_policy {
+      days = try(each.value.blob_service.policy.delete_retention_in_days, 7)
+    }
+
+    restore_policy {
+      days = try(each.value.blob_service.policy.restore_in_days, 5)
+    }
+
+    container_delete_retention_policy {
+      days = try(each.value.blob_service.policy.container_delete_retention_in_days, 7)
+    }
   }
 
   identity {

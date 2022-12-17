@@ -45,6 +45,12 @@ module "storage" {
             max_age_in_seconds = "200"
           }
         }
+
+        policy = {
+          delete_retention_in_days           = 8
+          restore_in_days                    = 7
+          container_delete_retention_in_days = 8
+        }
       }
     }
   }
