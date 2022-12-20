@@ -83,6 +83,34 @@ resource "azurerm_storage_account" "sa" {
     }
   }
 
+  share_properties {
+    dynamic "cors_rule" {
+      for_each = {
+        for k, v in try(each.value.share_service.cors_rules, {}) : k => v
+      }
+
+      content {
+        allowed_headers    = cors_rule.value.allowed_headers
+        allowed_methods    = cors_rule.value.allowed_methods
+        allowed_origins    = cors_rule.value.allowed_origins
+        exposed_headers    = cors_rule.value.exposed_headers
+        max_age_in_seconds = cors_rule.value.max_age_in_seconds
+      }
+    }
+
+    retention_policy {
+      days = try(each.value.share_service.retention_in_days, 7)
+    }
+
+    smb {
+      versions                        = try(each.value.share_service.smb.versions, [])
+      authentication_types            = try(each.value.share_service.smb.authentication_types, [])
+      channel_encryption_type         = try(each.value.share_service.smb.channel_encryption_type, [])
+      multichannel_enabled            = try(each.value.share_service.smb.multichannel_enabled, false)
+      kerberos_ticket_encryption_type = try(each.value.share_service.smb.kerb_ticket_encryption_type, [])
+    }
+  }
+
   identity {
     type = "SystemAssigned"
   }
