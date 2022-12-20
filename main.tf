@@ -50,15 +50,15 @@ resource "azurerm_storage_account" "sa" {
   )
 
   blob_properties {
-    last_access_time_enabled      = try(each.value.blob_service.enable.last_access_time, false)
-    versioning_enabled            = try(each.value.blob_service.enable.versioning, false)
-    change_feed_enabled           = try(each.value.blob_service.enable.change_feed, false)
-    change_feed_retention_in_days = try(each.value.blob_service.change_feed_retention_in_days, null)
-    default_service_version       = try(each.value.blob_service.default_service_version, "2020-06-12")
+    last_access_time_enabled      = try(each.value.blob_properties.enable.last_access_time, false)
+    versioning_enabled            = try(each.value.blob_properties.enable.versioning, false)
+    change_feed_enabled           = try(each.value.blob_properties.enable.change_feed, false)
+    change_feed_retention_in_days = try(each.value.blob_properties.change_feed_retention_in_days, null)
+    default_service_version       = try(each.value.blob_properties.default_service_version, "2020-06-12")
 
     dynamic "cors_rule" {
       for_each = {
-        for k, v in try(each.value.blob_service.cors_rules, {}) : k => v
+        for k, v in try(each.value.blob_properties.cors_rules, {}) : k => v
       }
 
       content {
@@ -71,22 +71,29 @@ resource "azurerm_storage_account" "sa" {
     }
 
     delete_retention_policy {
-      days = try(each.value.blob_service.policy.delete_retention_in_days, 7)
+      days = try(each.value.blob_properties.policy.delete_retention_in_days, 7)
     }
 
-    restore_policy {
-      days = try(each.value.blob_service.policy.restore_in_days, 5)
+    dynamic "restore_policy" {
+      for_each = {
+        for k, v in var.storage_accounts : k => v
+        if try(v.blob_properties.enable.restore_policy, false) == true
+      }
+
+      content {
+        days = try(each.value.blob_properties.policy.restore_in_days, 5)
+      }
     }
 
     container_delete_retention_policy {
-      days = try(each.value.blob_service.policy.container_delete_retention_in_days, 7)
+      days = try(each.value.blob_properties.policy.container_delete_retention_in_days, 7)
     }
   }
 
   share_properties {
     dynamic "cors_rule" {
       for_each = {
-        for k, v in try(each.value.share_service.cors_rules, {}) : k => v
+        for k, v in try(each.value.share_properties.cors_rules, {}) : k => v
       }
 
       content {
@@ -99,15 +106,15 @@ resource "azurerm_storage_account" "sa" {
     }
 
     retention_policy {
-      days = try(each.value.share_service.retention_in_days, 7)
+      days = try(each.value.share_properties.retention_in_days, 7)
     }
 
     smb {
-      versions                        = try(each.value.share_service.smb.versions, [])
-      authentication_types            = try(each.value.share_service.smb.authentication_types, [])
-      channel_encryption_type         = try(each.value.share_service.smb.channel_encryption_type, [])
-      multichannel_enabled            = try(each.value.share_service.smb.multichannel_enabled, false)
-      kerberos_ticket_encryption_type = try(each.value.share_service.smb.kerb_ticket_encryption_type, [])
+      versions                        = try(each.value.share_properties.smb.versions, [])
+      authentication_types            = try(each.value.share_properties.smb.authentication_types, [])
+      channel_encryption_type         = try(each.value.share_properties.smb.channel_encryption_type, [])
+      multichannel_enabled            = try(each.value.share_properties.smb.multichannel_enabled, false)
+      kerberos_ticket_encryption_type = try(each.value.share_properties.smb.kerb_ticket_encryption_type, [])
     }
   }
 
