@@ -26,8 +26,14 @@ module "storage" {
       location      = module.global.groups.demo.location
       resourcegroup = module.global.groups.demo.name
 
-      blob_service = {
-        enable = { versioning = true, last_access_time = true, change_feed = true }
+      share_properties = {
+        smb = {
+          versions                    = ["SMB3.1.1"]
+          authentication_types        = ["Kerberos"]
+          channel_encryption_type     = ["AES-256-GCM"]
+          kerb_ticket_encryption_type = ["AES-256"]
+          multichannel_enabled        = false
+        }
 
         cors_rules = {
           rule1 = {
@@ -37,20 +43,16 @@ module "storage" {
             exposed_headers    = ["x-ms-meta-*"]
             max_age_in_seconds = "200"
           }
-          rule2 = {
-            allowed_headers    = ["x-ms-meta-data*", "x-ms-meta-target*"]
-            allowed_methods    = ["GET"]
-            allowed_origins    = ["http://www.contoso.com"]
-            exposed_headers    = ["x-ms-meta-*"]
-            max_age_in_seconds = "200"
-          }
         }
 
         policy = {
-          delete_retention_in_days           = 8
-          restore_in_days                    = 7
-          container_delete_retention_in_days = 8
+          retention_in_days = 8
         }
+      }
+
+      shares = {
+        fs1 = { name = "smbfileshare1", quota = 50 }
+        fs2 = { name = "smbfileshare2", quota = 10 }
       }
     }
   }
