@@ -8,11 +8,11 @@ Terraform module which creates storage account resources on Azure.
 The below features and integrations are made available:
 
 - [multiple](examples/multiple-accounts/main.tf) storage accounts
-- [shares](#usage-fileshares), [tables](#usage-tables), [containers](examples/containers/main.tf), [queues](#usage-queues) support on each storage account
+- [shares](examples/shares/main.tf), [tables](#usage-tables), [containers](examples/containers/main.tf), [queues](#usage-queues) support on each storage account
 - [management policies](examples/management-policies/main.tf) using multiple rules
 - [terratest](https://terratest.gruntwork.io) is used to validate different integrations
 - [diagnostic](examples/diagnostic-settings/main.tf) logs integration
-- [cors](examples/cors/main.tf) rules support on blob services
+- [cors](#usage-blob-cors-rules) rules support
 - advanced threat protection
 
 The below examples shows the usage when consuming the module:
@@ -235,7 +235,7 @@ module "storage" {
 }
 ```
 
-## Usage: cors rules
+## Usage: blob cors rules
 
 ```hcl
 module "storage" {
@@ -250,8 +250,13 @@ module "storage" {
       location      = module.global.groups.demo.location
       resourcegroup = module.global.groups.demo.name
 
-      blob_service = {
-        enable = { versioning = true, last_access_time = true, change_feed = true }
+      blob_properties = {
+        enable = {
+          versioning       = true
+          last_access_time = true
+          change_feed      = true
+          restore_policy   = true
+        }
 
         cors_rules = {
           rule1 = {
