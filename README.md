@@ -8,7 +8,7 @@ Terraform module which creates storage account resources on Azure.
 The below features and integrations are made available:
 
 - [multiple](examples/multiple-accounts/main.tf) storage accounts
-- [shares](examples/shares/main.tf), [tables](#usage-tables), [containers](examples/containers/main.tf), [queues](#usage-queues) support on each storage account
+- [shares](examples/shares/main.tf), [tables](#usage-tables), [containers](examples/containers/main.tf), [queues](examples/queues/main.tf) support on each storage account
 - [management policies](examples/management-policies/main.tf) using multiple rules
 - [terratest](https://terratest.gruntwork.io) is used to validate different integrations
 - [diagnostic](examples/diagnostic-settings/main.tf) logs integration

@@ -118,6 +118,44 @@ resource "azurerm_storage_account" "sa" {
     }
   }
 
+  queue_properties {
+    dynamic "cors_rule" {
+      for_each = {
+        for k, v in try(each.value.queue_properties.cors_rules, {}) : k => v
+      }
+
+      content {
+        allowed_headers    = cors_rule.value.allowed_headers
+        allowed_methods    = cors_rule.value.allowed_methods
+        allowed_origins    = cors_rule.value.allowed_origins
+        exposed_headers    = cors_rule.value.exposed_headers
+        max_age_in_seconds = cors_rule.value.max_age_in_seconds
+      }
+    }
+
+    logging {
+      version               = try(each.value.queue_properties.logging.version, "1.0")
+      delete                = try(each.value.queue_properties.logging.delete, false)
+      read                  = try(each.value.queue_properties.logging.read, false)
+      write                 = try(each.value.queue_properties.logging.write, false)
+      retention_policy_days = try(each.value.queue_properties.logging.retention_policy_days, 7)
+    }
+
+    minute_metrics {
+      enabled               = try(each.value.queue_properties.minute_metrics.enabled, false)
+      version               = try(each.value.queue_properties.minute_metrics.version, "1.0")
+      include_apis          = try(each.value.queue_properties.minute_metrics.include_apis, false)
+      retention_policy_days = try(each.value.queue_properties.minute_metrics.retention_policy_days, 7)
+    }
+
+    hour_metrics {
+      enabled               = try(each.value.queue_properties.hour_metrics.enabled, false)
+      version               = try(each.value.queue_properties.hour_metrics.version, "1.0")
+      include_apis          = try(each.value.queue_properties.hour_metrics.include_apis, false)
+      retention_policy_days = try(each.value.queue_properties.hour_metrics.retention_policy_days, 7)
+    }
+  }
+
   identity {
     type = "SystemAssigned"
   }
