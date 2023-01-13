@@ -12,11 +12,12 @@ func TestApplyNoError(t *testing.T) {
 	tests := []string{
 		//"../examples/shares",
 		//"../examples/blob",
-		"../examples/simple",
+		//"../examples/simple",
 		//"../examples/multiple",
 		//"../examples/management-policies",
 		//"../examples/containers",
 		//"../examples/diagnostic-settings",
+		"../examples/private-endpoints",
 	}
 
 	for _, test := range tests {

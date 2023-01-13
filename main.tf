@@ -305,3 +305,26 @@ resource "azurerm_advanced_threat_protection" "prot" {
   target_resource_id = azurerm_storage_account.sa[each.key].id
   enabled            = each.value.enable.advanced_threat_protection
 }
+
+#----------------------------------------------------------------------------------------
+# private endpoint
+#----------------------------------------------------------------------------------------
+
+resource "azurerm_private_endpoint" "endpoint" {
+  for_each = {
+    for sa, endpoint in var.storage_accounts : sa => endpoint
+    if try(endpoint.enable.private_endpoint, false) == true
+  }
+
+  name                = "end${var.company}${each.key}${var.env}${var.region}${random_string.random[each.key].result}"
+  resource_group_name = data.azurerm_resource_group.rg[each.key].name
+  location            = data.azurerm_resource_group.rg[each.key].location
+  subnet_id           = each.value.enable.subnet_id
+
+  private_service_connection {
+    name                           = "con${var.company}${each.key}${var.env}${var.region}${random_string.random[each.key].result}"
+    private_connection_resource_id = azurerm_storage_account.sa[each.key].id
+    is_manual_connection           = false
+    subresource_names              = ["blob"]
+  }
+}
