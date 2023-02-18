@@ -1,6 +1,6 @@
 # Storage Account
 
-This terraform module simplifies the process of creating and managing storage accounts on azure with customizable options and features, offering a flexible and powerful solution for managing Azure storage through code.
+This terraform module simplifies the process of creating and managing storage accounts on azure with customizable options and features, offering a flexible and powerful solution for managing azure storage through code.
 
 The below features and integrations are made available:
 
