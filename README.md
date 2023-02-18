@@ -1,8 +1,6 @@
 # Storage Account
 
-Azure Storage Accounts are a core service provided by Microsoft Azure that allow users to store and manage various types of data in the cloud.  
-
-This Terraform module simplifies the process of creating and managing storage accounts on Azure with customizable options and features, offering a flexible and powerful solution for managing Azure storage through code.
+This terraform module simplifies the process of creating and managing storage accounts on azure with customizable options and features, offering a flexible and powerful solution for managing Azure storage through code.
 
 The below features and integrations are made available:
 
