@@ -1,6 +1,3 @@
-![example workflow](https://github.com/aztfmods/module-azurerm-sa/actions/workflows/validate.yml/badge.svg)
-![example workflow](https://img.shields.io/github/v/release/aztfmods/module-azurerm-sa)
-
 # Storage Account
 
 Terraform module which creates storage account resources on Azure.
