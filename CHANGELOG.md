@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.0](https://github.com/aztfmods/module-azurerm-sa/compare/v1.7.0...v1.8.0) (2023-02-18)
+
+
+### Features
+
+* add queue_properties support ([#59](https://github.com/aztfmods/module-azurerm-sa/issues/59)) ([4b369cf](https://github.com/aztfmods/module-azurerm-sa/commit/4b369cffd8e5fbf97cafe90d597f2cf6b4e1fd86))
+
 ## [1.7.0](https://github.com/aztfmods/module-azurerm-sa/compare/v1.6.0...v1.7.0) (2022-12-17)
 
 
