@@ -2,7 +2,7 @@ module vnet
 
 go 1.18
 
-require github.com/gruntwork-io/terratest v0.41.12
+require github.com/gruntwork-io/terratest v0.41.15
 
 require (
 	cloud.google.com/go v0.105.0 // indirect
@@ -42,7 +42,7 @@ require (
 	github.com/ulikunitz/xz v0.5.10 // indirect
 	github.com/zclconf/go-cty v1.9.1 // indirect
 	go.opencensus.io v0.24.0 // indirect
-	golang.org/x/crypto v0.0.0-20210921155107-089bfa567519 // indirect
+	golang.org/x/crypto v0.1.0 // indirect
 	golang.org/x/net v0.7.0 // indirect
 	golang.org/x/oauth2 v0.1.0 // indirect
 	golang.org/x/sys v0.5.0 // indirect
