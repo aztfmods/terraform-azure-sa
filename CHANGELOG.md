@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.0](https://github.com/aztfmods/module-azurerm-sa/compare/v1.8.0...v1.9.0) (2023-03-18)
+
+
+### Features
+
+* simplify structure ([#67](https://github.com/aztfmods/module-azurerm-sa/issues/67)) ([eb90b6e](https://github.com/aztfmods/module-azurerm-sa/commit/eb90b6ec11df9dd599af768510ece6c44f08f26c))
+
 ## [1.8.0](https://github.com/aztfmods/module-azurerm-sa/compare/v1.7.0...v1.8.0) (2023-02-18)
 
 
