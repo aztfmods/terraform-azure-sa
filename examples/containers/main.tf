@@ -21,20 +21,13 @@ module "storage" {
   env     = module.global.env
   region  = module.global.region
 
-  storage_accounts = {
-    demo = {
-      location      = module.global.groups.demo.location
-      resourcegroup = module.global.groups.demo.name
+  storage = {
+    location      = module.global.groups.demo.location
+    resourcegroup = module.global.groups.demo.name
 
-      sku = {
-        tier = "Standard"
-        type = "GRS"
-      }
-
-      containers = {
-        sc1 = { name = "mystore250", access_type = "private" }
-        sc2 = { name = "mystore251", access_type = "private" }
-      }
+    containers = {
+      sc1 = { name = "mystore250", access_type = "private" }
+      sc2 = { name = "mystore251", access_type = "private" }
     }
   }
   depends_on = [module.global]

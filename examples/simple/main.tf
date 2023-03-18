@@ -21,15 +21,13 @@ module "storage" {
   env     = module.global.env
   region  = module.global.region
 
-  storage_accounts = {
-    demo = {
-      location      = module.global.groups.demo.location
-      resourcegroup = module.global.groups.demo.name
+  storage = {
+    location      = module.global.groups.demo.location
+    resourcegroup = module.global.groups.demo.name
 
-      enable = {
-        sftp   = true
-        is_hns = true
-      }
+    enable = {
+      sftp   = true
+      is_hns = true
     }
   }
   depends_on = [module.global]
