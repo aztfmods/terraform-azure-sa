@@ -1,4 +1,4 @@
-variable "storage_accounts" {}
+variable "storage" {}
 variable "company" {}
 variable "region" {}
 variable "env" {}

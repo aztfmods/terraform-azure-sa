@@ -1,20 +1,8 @@
 #----------------------------------------------------------------------------------------
-# Resourcegroups
-#----------------------------------------------------------------------------------------
-
-data "azurerm_resource_group" "rg" {
-  for_each = var.storage_accounts
-
-  name = each.value.resourcegroup
-}
-
-#----------------------------------------------------------------------------------------
 # Generate random id
 #----------------------------------------------------------------------------------------
 
 resource "random_string" "random" {
-  for_each = var.storage_accounts
-
   length    = 3
   min_lower = 3
   special   = false
@@ -27,38 +15,36 @@ resource "random_string" "random" {
 #----------------------------------------------------------------------------------------
 
 resource "azurerm_storage_account" "sa" {
-  for_each = var.storage_accounts
+  name                     = "sa${var.company}${var.env}${var.region}${random_string.random.result}"
+  resource_group_name      = var.storage.resourcegroup
+  location                 = var.storage.location
+  account_tier             = try(var.storage.sku.tier, "Standard")
+  account_replication_type = try(var.storage.sku.type, "GRS")
+  account_kind             = try(var.storage.kind, "StorageV2")
 
-  name                     = "sa${var.company}${each.key}${var.env}${var.region}${random_string.random[each.key].result}"
-  resource_group_name      = data.azurerm_resource_group.rg[each.key].name
-  location                 = data.azurerm_resource_group.rg[each.key].location
-  account_tier             = try(each.value.sku.tier, "Standard")
-  account_replication_type = try(each.value.sku.type, "GRS")
-  account_kind             = try(each.value.kind, "StorageV2")
-
-  allow_nested_items_to_be_public  = try(each.value.enable.allow_public_nested_items, true)
-  shared_access_key_enabled        = try(each.value.enable.shared_access_key, true)
-  public_network_access_enabled    = try(each.value.enable.public_network_access, true)
-  is_hns_enabled                   = try(each.value.enable.is_hns, false)
-  nfsv3_enabled                    = try(each.value.enable.nfsv3, false)
-  cross_tenant_replication_enabled = try(each.value.enable.cross_tenant_replication, true)
+  allow_nested_items_to_be_public  = try(var.storage.enable.allow_public_nested_items, true)
+  shared_access_key_enabled        = try(var.storage.enable.shared_access_key, true)
+  public_network_access_enabled    = try(var.storage.enable.public_network_access, true)
+  is_hns_enabled                   = try(var.storage.enable.is_hns, false)
+  nfsv3_enabled                    = try(var.storage.enable.nfsv3, false)
+  cross_tenant_replication_enabled = try(var.storage.enable.cross_tenant_replication, true)
 
   sftp_enabled = (
-    try(each.value.enable.is_hns, false) == false ?
-    try(each.value.enable.sftp, false)
+    try(var.storage.enable.is_hns, false) == false ?
+    try(var.storage.enable.sftp, false)
     : true
   )
 
   blob_properties {
-    last_access_time_enabled      = try(each.value.blob_properties.enable.last_access_time, false)
-    versioning_enabled            = try(each.value.blob_properties.enable.versioning, false)
-    change_feed_enabled           = try(each.value.blob_properties.enable.change_feed, false)
-    change_feed_retention_in_days = try(each.value.blob_properties.change_feed_retention_in_days, null)
-    default_service_version       = try(each.value.blob_properties.default_service_version, "2020-06-12")
+    last_access_time_enabled      = try(var.storage.blob_properties.enable.last_access_time, false)
+    versioning_enabled            = try(var.storage.blob_properties.enable.versioning, false)
+    change_feed_enabled           = try(var.storage.blob_properties.enable.change_feed, false)
+    change_feed_retention_in_days = try(var.storage.blob_properties.change_feed_retention_in_days, null)
+    default_service_version       = try(var.storage.blob_properties.default_service_version, "2020-06-12")
 
     dynamic "cors_rule" {
       for_each = {
-        for k, v in try(each.value.blob_properties.cors_rules, {}) : k => v
+        for k, v in try(var.storage.blob_properties.cors_rules, {}) : k => v
       }
 
       content {
@@ -71,29 +57,28 @@ resource "azurerm_storage_account" "sa" {
     }
 
     delete_retention_policy {
-      days = try(each.value.blob_properties.policy.delete_retention_in_days, 7)
+      days = try(var.storage.blob_properties.policy.delete_retention_in_days, 7)
     }
 
+
+
     dynamic "restore_policy" {
-      for_each = {
-        for k, v in var.storage_accounts : k => v
-        if try(v.blob_properties.enable.restore_policy, false) == true
-      }
+      for_each = try(var.storage.blob_properties.enable.retention_policy, false) == true ? [1] : []
 
       content {
-        days = try(each.value.blob_properties.policy.restore_in_days, 5)
+        days = try(var.storage.blob_properties.policy.restore_in_days, 5)
       }
     }
 
     container_delete_retention_policy {
-      days = try(each.value.blob_properties.policy.container_delete_retention_in_days, 7)
+      days = try(var.storage.blob_properties.policy.container_delete_retention_in_days, 7)
     }
   }
 
   share_properties {
     dynamic "cors_rule" {
       for_each = {
-        for k, v in try(each.value.share_properties.cors_rules, {}) : k => v
+        for k, v in try(var.storage.share_properties.cors_rules, {}) : k => v
       }
 
       content {
@@ -106,22 +91,22 @@ resource "azurerm_storage_account" "sa" {
     }
 
     retention_policy {
-      days = try(each.value.share_properties.retention_in_days, 7)
+      days = try(var.storage.share_properties.retention_in_days, 7)
     }
 
     smb {
-      versions                        = try(each.value.share_properties.smb.versions, [])
-      authentication_types            = try(each.value.share_properties.smb.authentication_types, [])
-      channel_encryption_type         = try(each.value.share_properties.smb.channel_encryption_type, [])
-      multichannel_enabled            = try(each.value.share_properties.smb.multichannel_enabled, false)
-      kerberos_ticket_encryption_type = try(each.value.share_properties.smb.kerb_ticket_encryption_type, [])
+      versions                        = try(var.storage.share_properties.smb.versions, [])
+      authentication_types            = try(var.storage.share_properties.smb.authentication_types, [])
+      channel_encryption_type         = try(var.storage.share_properties.smb.channel_encryption_type, [])
+      multichannel_enabled            = try(var.storage.share_properties.smb.multichannel_enabled, false)
+      kerberos_ticket_encryption_type = try(var.storage.share_properties.smb.kerb_ticket_encryption_type, [])
     }
   }
 
   queue_properties {
     dynamic "cors_rule" {
       for_each = {
-        for k, v in try(each.value.queue_properties.cors_rules, {}) : k => v
+        for k, v in try(var.storage.queue_properties.cors_rules, {}) : k => v
       }
 
       content {
@@ -134,25 +119,25 @@ resource "azurerm_storage_account" "sa" {
     }
 
     logging {
-      version               = try(each.value.queue_properties.logging.version, "1.0")
-      delete                = try(each.value.queue_properties.logging.delete, false)
-      read                  = try(each.value.queue_properties.logging.read, false)
-      write                 = try(each.value.queue_properties.logging.write, false)
-      retention_policy_days = try(each.value.queue_properties.logging.retention_policy_days, 7)
+      version               = try(var.storage.queue_properties.logging.version, "1.0")
+      delete                = try(var.storage.queue_properties.logging.delete, false)
+      read                  = try(var.storage.queue_properties.logging.read, false)
+      write                 = try(var.storage.queue_properties.logging.write, false)
+      retention_policy_days = try(var.storage.queue_properties.logging.retention_policy_days, 7)
     }
 
     minute_metrics {
-      enabled               = try(each.value.queue_properties.minute_metrics.enabled, false)
-      version               = try(each.value.queue_properties.minute_metrics.version, "1.0")
-      include_apis          = try(each.value.queue_properties.minute_metrics.include_apis, false)
-      retention_policy_days = try(each.value.queue_properties.minute_metrics.retention_policy_days, 7)
+      enabled               = try(var.storage.queue_properties.minute_metrics.enabled, false)
+      version               = try(var.storage.queue_properties.minute_metrics.version, "1.0")
+      include_apis          = try(var.storage.queue_properties.minute_metrics.include_apis, false)
+      retention_policy_days = try(var.storage.queue_properties.minute_metrics.retention_policy_days, 7)
     }
 
     hour_metrics {
-      enabled               = try(each.value.queue_properties.hour_metrics.enabled, false)
-      version               = try(each.value.queue_properties.hour_metrics.version, "1.0")
-      include_apis          = try(each.value.queue_properties.hour_metrics.include_apis, false)
-      retention_policy_days = try(each.value.queue_properties.hour_metrics.retention_policy_days, 7)
+      enabled               = try(var.storage.queue_properties.hour_metrics.enabled, false)
+      version               = try(var.storage.queue_properties.hour_metrics.version, "1.0")
+      include_apis          = try(var.storage.queue_properties.hour_metrics.include_apis, false)
+      retention_policy_days = try(var.storage.queue_properties.hour_metrics.retention_policy_days, 7)
     }
   }
 
@@ -168,7 +153,7 @@ resource "azurerm_storage_account" "sa" {
 
 resource "azurerm_storage_container" "sc" {
   for_each = {
-    for sc in local.containers : "${sc.sa_key}.${sc.sc_key}" => sc
+    for sc in local.containers : sc.sc_key => sc
   }
 
   name                  = each.value.name
@@ -182,7 +167,7 @@ resource "azurerm_storage_container" "sc" {
 
 resource "azurerm_storage_queue" "sq" {
   for_each = {
-    for sq in local.queues : "${sq.sa_key}.${sq.sq_key}" => sq
+    for sq in local.queues : sq.sq_key => sq
   }
 
   name                 = each.value.name
@@ -195,7 +180,7 @@ resource "azurerm_storage_queue" "sq" {
 
 resource "azurerm_storage_share" "sh" {
   for_each = {
-    for fs in local.shares : "${fs.sa_key}.${fs.fs_key}" => fs
+    for fs in local.shares : fs.fs_key => fs
   }
 
   name                 = each.value.name
@@ -209,7 +194,7 @@ resource "azurerm_storage_share" "sh" {
 
 resource "azurerm_storage_table" "st" {
   for_each = {
-    for st in local.tables : "${st.sa_key}.${st.st_key}" => st
+    for st in local.tables : st.st_key => st
   }
 
   name                 = each.value.name
@@ -221,15 +206,12 @@ resource "azurerm_storage_table" "st" {
 #----------------------------------------------------------------------------------------
 
 resource "azurerm_storage_management_policy" "mgmt_policy" {
-  for_each = {
-    for sa, mgt_policy in var.storage_accounts : sa => mgt_policy
-    if try(mgt_policy.enable.storage_management_policy, false) == true
-  }
+  for_each = try(var.storage.enable["management_policy"]) ? { "management_policy" = true } : {}
 
-  storage_account_id = azurerm_storage_account.sa[each.key].id
+  storage_account_id = azurerm_storage_account.sa.id
 
   dynamic "rule" {
-    for_each = try(each.value.mgt_policies.rules, {})
+    for_each = try(var.storage.mgt_policies.rules, {})
 
     content {
       name    = rule.value.name
@@ -297,11 +279,8 @@ resource "azurerm_storage_management_policy" "mgmt_policy" {
 #----------------------------------------------------------------------------------------
 
 resource "azurerm_advanced_threat_protection" "prot" {
-  for_each = {
-    for sa, defender in var.storage_accounts : sa => defender
-    if try(defender.enable.advanced_threat_protection, false) == true
-  }
+  for_each = try(var.storage.enable["threat_protection"]) ? { "threat_protection" = true } : {}
 
-  target_resource_id = azurerm_storage_account.sa[each.key].id
-  enabled            = each.value.enable.advanced_threat_protection
+  target_resource_id = azurerm_storage_account.sa.id
+  enabled            = var.storage.enable.threat_protection
 }
