@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.10.0](https://github.com/aztfmods/module-azurerm-sa/compare/v1.9.0...v1.10.0) (2023-03-22)
+
+
+### Features
+
+* add management policy support for auto_tier_to_hot_from_cool_enabled ([#70](https://github.com/aztfmods/module-azurerm-sa/issues/70)) ([1a07e58](https://github.com/aztfmods/module-azurerm-sa/commit/1a07e58b13711475f285b6554443545f1123bc28))
+
 ## [1.9.0](https://github.com/aztfmods/module-azurerm-sa/compare/v1.8.0...v1.9.0) (2023-03-18)
 
 
