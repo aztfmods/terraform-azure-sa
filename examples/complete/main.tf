@@ -163,6 +163,7 @@ module "storage" {
                 tier_to_cool_after_days_since_last_access_time_greater_than    = 30
                 tier_to_archive_after_days_since_last_access_time_greater_than = 90
                 delete_after_days_since_last_access_time_greater_than          = 365
+                auto_tier_to_hot_from_cool_enabled                             = true
               }
             }
           }
