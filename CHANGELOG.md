@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.11.0](https://github.com/aztfmods/module-azurerm-sa/compare/v1.10.0...v1.11.0) (2023-03-24)
+
+
+### Features
+
+* add custom domain support ([#74](https://github.com/aztfmods/module-azurerm-sa/issues/74)) ([1bc2f3b](https://github.com/aztfmods/module-azurerm-sa/commit/1bc2f3bc9d02f8bd738c11ea33b213d3a448f15c))
+* add sas policy support ([#72](https://github.com/aztfmods/module-azurerm-sa/issues/72)) ([5c08ce9](https://github.com/aztfmods/module-azurerm-sa/commit/5c08ce9189bf387b24c1b9d543ecb01570207708))
+
 ## [1.10.0](https://github.com/aztfmods/module-azurerm-sa/compare/v1.9.0...v1.10.0) (2023-03-22)
 
 
