@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.12.0](https://github.com/aztfmods/module-azurerm-sa/compare/v1.11.0...v1.12.0) (2023-03-24)
+
+
+### Features
+
+* add default to oauth authentication support ([#77](https://github.com/aztfmods/module-azurerm-sa/issues/77)) ([76cc2d1](https://github.com/aztfmods/module-azurerm-sa/commit/76cc2d128f32fb2da6c7b15c4b9223757d746dbc))
+* add immutability policy support ([#75](https://github.com/aztfmods/module-azurerm-sa/issues/75)) ([bd2765c](https://github.com/aztfmods/module-azurerm-sa/commit/bd2765c5285a1530a4ef2b7ad0651683baaab4ee))
+
 ## [1.11.0](https://github.com/aztfmods/module-azurerm-sa/compare/v1.10.0...v1.11.0) (2023-03-24)
 
 
