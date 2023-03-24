@@ -60,8 +60,6 @@ resource "azurerm_storage_account" "sa" {
       days = try(var.storage.blob_properties.policy.delete_retention_in_days, 7)
     }
 
-
-
     dynamic "restore_policy" {
       for_each = try(var.storage.blob_properties.enable.retention_policy, false) == true ? [1] : []
 
@@ -142,11 +140,21 @@ resource "azurerm_storage_account" "sa" {
   }
 
   dynamic "sas_policy" {
-    for_each = try(var.storage.sas_policy, null) != null ? { "default" = var.storage.sas_policy } : {}
+    for_each = try(var.storage.policy.sas, null) != null ? { "default" = var.storage.policy.sas } : {}
 
     content {
       expiration_action = sas_policy.value.expiration_action
       expiration_period = sas_policy.value.expiration_period
+    }
+  }
+
+  dynamic "immutability_policy" {
+    for_each = try(var.storage.policy.immutability, null) != null ? { "default" = var.storage.policy.immutability } : {}
+
+    content {
+      state                         = immutability_policy.value.state_mode
+      period_since_creation_in_days = immutability_policy.value.period_since_creation_in_days
+      allow_protected_append_writes = immutability_policy.value.allow_protected_append_writes
     }
   }
 
