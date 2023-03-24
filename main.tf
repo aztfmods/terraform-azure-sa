@@ -141,6 +141,15 @@ resource "azurerm_storage_account" "sa" {
     }
   }
 
+  dynamic "sas_policy" {
+    for_each = try(var.storage.sas_policy, null) != null ? { "default" = var.storage.sas_policy } : {}
+
+    content {
+      expiration_action = sas_policy.value.expiration_action
+      expiration_period = sas_policy.value.expiration_period
+    }
+  }
+
   identity {
     type = "SystemAssigned"
   }

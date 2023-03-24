@@ -113,6 +113,11 @@ module "storage" {
       }
     }
 
+    sas_policy = {
+      expiration_action = "Log"
+      expiration_period = "07.05:13:22"
+    }
+
     mgt_policies = {
       rules = {
         rule_1 = {
@@ -178,18 +183,18 @@ module "storage" {
 
     containers = {
       sc1 = {
-        name = "mystore250"
+        name        = "mystore250"
         access_type = "private"
       }
     }
 
     shares = {
       fs1 = {
-        name = "smbfileshare1"
+        name  = "smbfileshare1"
         quota = 50
       }
       fs2 = {
-        name = "smbfileshare2"
+        name  = "smbfileshare2"
         quota = 10
       }
     }
