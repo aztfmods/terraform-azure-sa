@@ -28,6 +28,7 @@ resource "azurerm_storage_account" "sa" {
   is_hns_enabled                   = try(var.storage.enable.is_hns, false)
   nfsv3_enabled                    = try(var.storage.enable.nfsv3, false)
   cross_tenant_replication_enabled = try(var.storage.enable.cross_tenant_replication, true)
+  default_to_oauth_authentication  = try(var.storage.enable.default_to_oauth_authentication, false)
 
   sftp_enabled = (
     try(var.storage.enable.is_hns, false) == false ?
