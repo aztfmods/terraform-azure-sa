@@ -10,7 +10,7 @@ module "global" {
   region  = "weu"
 
   rgs = {
-    demo = { location = "westeurope" }
+    demow = { location = "westeurope" }
   }
 }
 
@@ -117,11 +117,6 @@ module "storage" {
       sas = {
         expiration_action = "Log"
         expiration_period = "07.05:13:22"
-      }
-      immutability = {
-        state_mode                    = "Disabled"
-        period_since_creation_in_days = 365
-        allow_protected_append_writes = true
       }
     }
 
