@@ -150,6 +150,15 @@ resource "azurerm_storage_account" "sa" {
     }
   }
 
+  dynamic "custom_domain" {
+    for_each = try(var.storage.custom_domain, null) != null ? { "default" = var.storage.custom_domain } : {}
+
+    content {
+      name          = custom_domain.value.name
+      use_subdomain = custom_domain.value.use_subdomain
+    }
+  }
+
   identity {
     type = "SystemAssigned"
   }
