@@ -22,8 +22,8 @@ module "storage" {
   region  = module.global.region
 
   storage = {
-    location      = module.global.groups.demo.location
-    resourcegroup = module.global.groups.demo.name
+    location          = module.global.groups.demo.location
+    resourcegroup     = module.global.groups.demo.name
 
     enable = {
       sftp   = true

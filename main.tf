@@ -233,7 +233,7 @@ resource "azurerm_storage_table" "st" {
 #----------------------------------------------------------------------------------------
 
 resource "azurerm_storage_management_policy" "mgmt_policy" {
-  for_each = try(var.storage.enable["management_policy"]) ? { "management_policy" = true } : {}
+  for_each = try(var.storage.management_policy, null) != null ? { "default" = var.storage.management_policy } : {}
 
   storage_account_id = azurerm_storage_account.sa.id
 
@@ -307,8 +307,8 @@ resource "azurerm_storage_management_policy" "mgmt_policy" {
 #----------------------------------------------------------------------------------------
 
 resource "azurerm_advanced_threat_protection" "prot" {
-  for_each = try(var.storage.enable["threat_protection"]) ? { "threat_protection" = true } : {}
+  for_each = try(var.storage.threat_protection, false) ? { "threat_protection" = true } : {}
 
   target_resource_id = azurerm_storage_account.sa.id
-  enabled            = var.storage.enable.threat_protection
+  enabled            = true
 }
