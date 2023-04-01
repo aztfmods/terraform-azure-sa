@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.13.0](https://github.com/aztfmods/module-azurerm-sa/compare/v1.12.0...v1.13.0) (2023-04-01)
+
+
+### Features
+
+* add makefile to include different deployment tests ([#78](https://github.com/aztfmods/module-azurerm-sa/issues/78)) ([c7dcfb7](https://github.com/aztfmods/module-azurerm-sa/commit/c7dcfb744c73119659d27dc5aac2d910574b68f4))
+
+
+### Bug Fixes
+
+* fix management policy and advanced thread protection resources to be optional ([#80](https://github.com/aztfmods/module-azurerm-sa/issues/80)) ([490aa0e](https://github.com/aztfmods/module-azurerm-sa/commit/490aa0e40ef14c218066ca58145cdcd6ee7ff0e2))
+
 ## [1.12.0](https://github.com/aztfmods/module-azurerm-sa/compare/v1.11.0...v1.12.0) (2023-03-24)
 
 
