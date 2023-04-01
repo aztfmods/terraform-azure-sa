@@ -9,20 +9,19 @@ import (
 func TestApplyNoError(t *testing.T) {
 	t.Parallel()
 
-	tests := []string{
-		//"../examples/shares",
-		//"../examples/blob",
-		"../examples/simple",
-		//"../examples/multiple",
-		//"../examples/management-policies",
-		//"../examples/containers",
-		//"../examples/diagnostic-settings",
+	tests := map[string]string{
+		"shares":              "../examples/shares",
+		"blob":                "../examples/blob",
+		"simple":              "../examples/simple",
+		"management-policies": "../examples/management-policies",
+		"containers":          "../examples/containers",
+		"diagnostic-settings": "../examples/diagnostic-settings",
 	}
 
-	for _, test := range tests {
-		t.Run(test, func(t *testing.T) {
+	for name, path := range tests {
+		t.Run(name, func(t *testing.T) {
 			terraformOptions := &terraform.Options{
-				TerraformDir: test,
+				TerraformDir: path,
 				NoColor:      true,
 			}
 
