@@ -10,7 +10,7 @@ module "global" {
   region  = "weu"
 
   rgs = {
-    demow = { location = "westeurope" }
+    demo = { location = "westeurope" }
   }
 }
 
@@ -118,6 +118,10 @@ module "storage" {
         expiration_action = "Log"
         expiration_period = "07.05:13:22"
       }
+    }
+
+    routing = {
+      publish_internet_endpoints = true
     }
 
     mgt_policies = {

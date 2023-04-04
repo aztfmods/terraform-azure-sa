@@ -149,6 +149,16 @@ resource "azurerm_storage_account" "sa" {
     }
   }
 
+  dynamic "routing" {
+    for_each = try(var.storage.routing, null) != null ? { "default" = var.storage.routing } : {}
+
+    content {
+      choice                      = try(routing.value.choice, "MicrosoftRouting")
+      publish_internet_endpoints  = try(routing.value.publish_internet_endpoints, false)
+      publish_microsoft_endpoints = try(routing.value.publish_microsoft_endpoints, false)
+    }
+  }
+
   dynamic "immutability_policy" {
     for_each = try(var.storage.policy.immutability, null) != null ? { "default" = var.storage.policy.immutability } : {}
 
