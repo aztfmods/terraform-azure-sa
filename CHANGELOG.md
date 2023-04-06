@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.14.0](https://github.com/aztfmods/module-azurerm-sa/compare/v1.13.0...v1.14.0) (2023-04-06)
+
+
+### Features
+
+* add routing support ([#81](https://github.com/aztfmods/module-azurerm-sa/issues/81)) ([bdc2339](https://github.com/aztfmods/module-azurerm-sa/commit/bdc233957e195b67b68529f5da42f83acb6d547c))
+
 ## [1.13.0](https://github.com/aztfmods/module-azurerm-sa/compare/v1.12.0...v1.13.0) (2023-04-01)
 
 
