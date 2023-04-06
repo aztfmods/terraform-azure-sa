@@ -1,7 +1,4 @@
-#----------------------------------------------------------------------------------------
-# Generate random id
-#----------------------------------------------------------------------------------------
-
+# generate random id
 resource "random_string" "random" {
   length    = 3
   min_lower = 3
@@ -10,10 +7,7 @@ resource "random_string" "random" {
   upper     = false
 }
 
-#----------------------------------------------------------------------------------------
-# Storage accounts
-#----------------------------------------------------------------------------------------
-
+# storage accounts
 resource "azurerm_storage_account" "sa" {
   name                     = "sa${var.company}${var.env}${var.region}${random_string.random.result}"
   resource_group_name      = var.storage.resourcegroup
@@ -183,11 +177,7 @@ resource "azurerm_storage_account" "sa" {
   }
 }
 
-
-#----------------------------------------------------------------------------------------
-# Containers
-#----------------------------------------------------------------------------------------
-
+# containers
 resource "azurerm_storage_container" "sc" {
   for_each = {
     for sc in local.containers : sc.sc_key => sc
@@ -198,10 +188,7 @@ resource "azurerm_storage_container" "sc" {
   container_access_type = each.value.container_access_type
 }
 
-#----------------------------------------------------------------------------------------
-# Queues
-#----------------------------------------------------------------------------------------
-
+# queues
 resource "azurerm_storage_queue" "sq" {
   for_each = {
     for sq in local.queues : sq.sq_key => sq
@@ -211,10 +198,7 @@ resource "azurerm_storage_queue" "sq" {
   storage_account_name = each.value.storage_account_name
 }
 
-#----------------------------------------------------------------------------------------
 # shares
-#----------------------------------------------------------------------------------------
-
 resource "azurerm_storage_share" "sh" {
   for_each = {
     for fs in local.shares : fs.fs_key => fs
@@ -225,10 +209,7 @@ resource "azurerm_storage_share" "sh" {
   quota                = each.value.quota
 }
 
-#----------------------------------------------------------------------------------------
 # tables
-#----------------------------------------------------------------------------------------
-
 resource "azurerm_storage_table" "st" {
   for_each = {
     for st in local.tables : st.st_key => st
@@ -238,10 +219,7 @@ resource "azurerm_storage_table" "st" {
   storage_account_name = each.value.storage_account_name
 }
 
-#----------------------------------------------------------------------------------------
 # management policies
-#----------------------------------------------------------------------------------------
-
 resource "azurerm_storage_management_policy" "mgmt_policy" {
   for_each = try(var.storage.management_policy, null) != null ? { "default" = var.storage.management_policy } : {}
 
@@ -312,10 +290,7 @@ resource "azurerm_storage_management_policy" "mgmt_policy" {
   }
 }
 
-#----------------------------------------------------------------------------------------
 # advanced threat protection
-#----------------------------------------------------------------------------------------
-
 resource "azurerm_advanced_threat_protection" "prot" {
   for_each = try(var.storage.threat_protection, false) ? { "threat_protection" = true } : {}
 
