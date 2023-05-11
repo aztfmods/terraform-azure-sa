@@ -154,14 +154,8 @@ module "storage" {
     }
 
     containers = {
-      sc1 = {
-        name = "sc1"
-        access_type = "private"
-      }
-      sc2 = {
-        name = "sc2"
-        access_type = "private"
-      }
+      sc1 = { name = "sc1", access_type = "private" }
+      sc2 = { name = "sc2", access_type = "public" }
     }
   }
   depends_on = [module.global]
@@ -209,14 +203,8 @@ module "storage" {
     }
 
     shares = {
-      fs1 = {
-        name  = "share1"
-        quota = 50
-      }
-      fs2 = {
-        name  = "share2"
-        quota = 10
-      }
+      fs1 = { name  = "share1", quota = 50 }
+      fs2 = { name  = "share2", quota = 10 }
     }
   }
   depends_on = [module.global]

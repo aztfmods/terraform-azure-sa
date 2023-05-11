@@ -188,22 +188,14 @@ module "storage" {
     }
 
     containers = {
-      sc1 = {
-        name        = "mystore250"
-        access_type = "private"
-      }
+      sc1 = { name = "mystore250", access_type = "private" }
     }
 
     shares = {
-      fs1 = {
-        name  = "smbfileshare1"
-        quota = 50
-      }
-      fs2 = {
-        name  = "smbfileshare2"
-        quota = 10
-      }
+      fs1 = { name = "smbfileshare1", quota = 50 }
+      fs2 = { name = "smbfileshare2", quota = 10 }
     }
   }
   depends_on = [module.global]
 }
+
