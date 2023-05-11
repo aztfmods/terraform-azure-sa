@@ -50,9 +50,16 @@ module "storage" {
     }
 
     shares = {
-      fs1 = { name = "smbfileshare1", quota = 50 }
-      fs2 = { name = "smbfileshare2", quota = 10 }
+      fs1 = {
+        name  = "share1"
+        quota = 50
+      }
+      fs2 = {
+        name  = "share2"
+        quota = 10
+      }
     }
   }
   depends_on = [module.global]
 }
+

@@ -53,8 +53,12 @@ module "storage" {
     }
 
     queues = {
-      q1 = { name = "queue1" }
-      q2 = { name = "queue2" }
+      q1 = {
+        name = "queue1"
+      }
+      q2 = {
+        name = "queue2"
+      }
     }
   }
   depends_on = [module.global]
