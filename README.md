@@ -7,12 +7,11 @@ The below features and integrations are made available:
 - shares, tables, containers, queues support
 - management policies using multiple rules
 - terratest is used to validate different integrations
-- cors rules support
 - advanced threat protection
 
 The below examples shows the usage when consuming the module:
 
-## Usage: containers
+## Usage: simple
 
 ```hcl
 module "storage" {
@@ -27,10 +26,6 @@ module "storage" {
   storage = {
     location      = module.global.groups.demo.location
     resourcegroup = module.global.groups.demo.name
-
-    containers = {
-      sc1 = { name = "mystore250", access_type = "private" }
-      sc2 = { name = "mystore251", access_type = "private" }
     }
   }
   depends_on = [module.global]
@@ -54,8 +49,12 @@ module "storage" {
     resourcegroup = module.rgs.groups.storageeus2.name
 
     tables = {
-      t1 = {name = "table1"}
-      t2 = {name = "table2"}
+      t1 = {
+        name = "table1"
+      }
+      t2 = {
+        name = "table2"
+      }
     }
   }
 }
@@ -77,15 +76,107 @@ module "storage" {
     location      = module.rgs.groups.storage.location
     resourcegroup = module.rgs.groups.storage.name
 
+    queue_properties = {
+      logging = {
+        version               = "1.0"
+        delete                = true
+        read                  = true
+        write                 = true
+        retention_policy_days = 8
+      }
+
+      cors_rules = {
+        rule1 = {
+          allowed_headers    = ["x-ms-meta-data*", "x-ms-meta-target*"]
+          allowed_methods    = ["POST", "GET"]
+          allowed_origins    = ["http://www.fabrikam.com"]
+          exposed_headers    = ["x-ms-meta-*"]
+          max_age_in_seconds = "200"
+        }
+      }
+
+      hour_metrics = {
+        version               = "1.0"
+        enabled               = true
+        include_apis          = true
+        retention_policy_days = 8
+      }
+    }
+
     queues = {
-      q1 = {name = "queue1"}
-      q2 = {name = "queue2"}
+      q1 = {
+        name = "queue1"
+      }
+      q2 = {
+        name = "queue2"
+      }
     }
   }
 }
 ```
 
-## Usage: fileshares
+## Usage: blob containers
+
+```hcl
+module "storage" {
+  source = "../../"
+
+  company = module.global.company
+  env     = module.global.env
+  region  = module.global.region
+
+  storage = {
+    location      = module.global.groups.demo.location
+    resourcegroup = module.global.groups.demo.name
+
+    blob_properties = {
+      enable = {
+        versioning       = true
+        last_access_time = true
+        change_feed      = true
+        restore_policy   = true
+      }
+
+      cors_rules = {
+        rule1 = {
+          allowed_headers    = ["x-ms-meta-data*", "x-ms-meta-target*"]
+          allowed_methods    = ["POST", "GET"]
+          allowed_origins    = ["http://www.fabrikam.com"]
+          exposed_headers    = ["x-ms-meta-*"]
+          max_age_in_seconds = "200"
+        }
+        rule2 = {
+          allowed_headers    = ["x-ms-meta-data*", "x-ms-meta-target*"]
+          allowed_methods    = ["GET"]
+          allowed_origins    = ["http://www.contoso.com"]
+          exposed_headers    = ["x-ms-meta-*"]
+          max_age_in_seconds = "200"
+        }
+      }
+
+      policy = {
+        delete_retention_in_days           = 8
+        restore_in_days                    = 7
+        container_delete_retention_in_days = 8
+      }
+    }
+
+    containers = {
+      sc1 = {
+        name = "sc1"
+        access_type = "private"
+      }
+      sc2 = {
+        name = "sc2"
+        access_type = "private"
+      }
+    }
+  }
+  depends_on = [module.global]
+}
+```
+
+## Usage: shares
 
 ```hcl
 module "storage" {
@@ -98,14 +189,45 @@ module "storage" {
   }
 
   storage = {
-    location      = module.rgs.groups.storageeus.location
-    resourcegroup = module.rgs.groups.storageeus.name
+    location      = module.global.groups.demo.location
+    resourcegroup = module.global.groups.demo.name
+
+    share_properties = {
+      smb = {
+        versions                    = ["SMB3.1.1"]
+        authentication_types        = ["Kerberos"]
+        channel_encryption_type     = ["AES-256-GCM"]
+        kerb_ticket_encryption_type = ["AES-256"]
+        multichannel_enabled        = false
+      }
+
+      cors_rules = {
+        rule1 = {
+          allowed_headers    = ["x-ms-meta-data*", "x-ms-meta-target*"]
+          allowed_methods    = ["POST", "GET"]
+          allowed_origins    = ["http://www.fabrikam.com"]
+          exposed_headers    = ["x-ms-meta-*"]
+          max_age_in_seconds = "200"
+        }
+      }
+
+      policy = {
+        retention_in_days = 8
+      }
+    }
 
     shares = {
-      fs1 = {name = "smbfileshare1",quota = 50}
-      fs2 = {name = "smbfileshare2",quota = 10}
+      fs1 = {
+        name  = "share1"
+        quota = 50
+      }
+      fs2 = {
+        name  = "share2"
+        quota = 10
+      }
     }
   }
+  depends_on = [module.global]
 }
 ```
 
@@ -196,56 +318,6 @@ module "storage" {
 }
 ```
 
-## Usage: blob cors rules
-
-```hcl
-module "storage" {
-  source = "../../"
-
-  company = module.global.company
-  env     = module.global.env
-  region  = module.global.region
-
-  storage = {
-    location      = module.global.groups.demo.location
-    resourcegroup = module.global.groups.demo.name
-
-    blob_properties = {
-      enable = {
-        versioning       = true
-        last_access_time = true
-        change_feed      = true
-        restore_policy   = true
-      }
-
-      cors_rules = {
-        rule1 = {
-          allowed_headers    = ["x-ms-meta-data*", "x-ms-meta-target*"]
-          allowed_methods    = ["POST", "GET"]
-          allowed_origins    = ["http://www.fabrikam.com"]
-          exposed_headers    = ["x-ms-meta-*"]
-          max_age_in_seconds = "200"
-        }
-        rule2 = {
-          allowed_headers    = ["x-ms-meta-data*", "x-ms-meta-target*"]
-          allowed_methods    = ["GET"]
-          allowed_origins    = ["http://www.contoso.com"]
-          exposed_headers    = ["x-ms-meta-*"]
-          max_age_in_seconds = "200"
-        }
-      }
-
-      policy = {
-        delete_retention_in_days           = 8
-        restore_in_days                    = 7
-        container_delete_retention_in_days = 8
-      }
-    }
-  }
-  depends_on = [module.global]
-}
-```
-
 ## Resources
 
 | Name | Type |
@@ -275,6 +347,11 @@ module "storage" {
 | :-- | :-- |
 | `sa` | contains all storage accounts |
 
+## Testing
+This GitHub repository features a [Makefile](./Makefile) tailored for testing various configurations. Each test target corresponds to different example use cases provided within the repository.
+
+Before running these tests, ensure that both Go and Terraform are installed on your system. To execute a specific test, use the following command ```make <test-target>```
+
 ## Authors
 
 Module is maintained by [Dennis Kool](https://github.com/dkooll) with help from [these awesome contributors](https://github.com/aztfmods/module-azurerm-sa/graphs/contributors).
@@ -285,5 +362,6 @@ MIT Licensed. See [LICENSE](https://github.com/aztfmods/module-azurerm-vnet/blob
 
 ## References
 
-- [Storage Documentation - Microsoft docs](https://learn.microsoft.com/en-us/azure/storage)
-- [Storage Accounts Rest Api - Microsoft docs](https://learn.microsoft.com/en-us/rest/api/storagerp/storage-accounts)
+- [Documentation](https://learn.microsoft.com/en-us/azure/storage)
+- [Rest Api](https://learn.microsoft.com/en-us/rest/api/storagerp/storage-accounts)
+- [Rest Api Specs](https://github.com/Azure/azure-rest-api-specs/tree/1f449b5a17448f05ce1cd914f8ed75a0b568d130/specification/storage)

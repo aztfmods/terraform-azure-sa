@@ -56,6 +56,17 @@ module "storage" {
         container_delete_retention_in_days = 8
       }
     }
+
+    containers = {
+      sc1 = {
+        name = "sc1"
+        access_type = "private"
+      }
+      sc2 = {
+        name = "sc2"
+        access_type = "private"
+      }
+    }
   }
   depends_on = [module.global]
 }
