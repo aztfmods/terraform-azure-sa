@@ -49,12 +49,8 @@ module "storage" {
     resourcegroup = module.rgs.groups.storageeus2.name
 
     tables = {
-      t1 = {
-        name = "table1"
-      }
-      t2 = {
-        name = "table2"
-      }
+      t1 = { name = "table1" }
+      t2 = { name = "table2" }
     }
   }
 }
@@ -104,12 +100,8 @@ module "storage" {
     }
 
     queues = {
-      q1 = {
-        name = "queue1"
-      }
-      q2 = {
-        name = "queue2"
-      }
+      q1 = { name = "queue1" }
+      q2 = { name = "queue2" }
     }
   }
 }
