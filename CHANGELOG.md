@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.15.0](https://github.com/aztfmods/module-azurerm-sa/compare/v1.14.0...v1.15.0) (2023-05-12)
+
+
+### Features
+
+* update documentation ([#86](https://github.com/aztfmods/module-azurerm-sa/issues/86)) ([ae879ad](https://github.com/aztfmods/module-azurerm-sa/commit/ae879ad2537b310a73c43a9418ed89db3e6cde07))
+
 ## [1.14.0](https://github.com/aztfmods/module-azurerm-sa/compare/v1.13.0...v1.14.0) (2023-04-06)
 
 
