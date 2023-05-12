@@ -1,8 +1,8 @@
-module vnet
+module github.com/aztfmods/module-azurerm-sa
 
-go 1.18
+go 1.20
 
-require github.com/gruntwork-io/terratest v0.41.18
+require github.com/gruntwork-io/terratest v0.41.24
 
 require (
 	cloud.google.com/go v0.105.0 // indirect
