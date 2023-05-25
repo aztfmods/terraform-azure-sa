@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.16.0](https://github.com/aztfmods/module-azurerm-sa/compare/v1.15.0...v1.16.0) (2023-05-25)
+
+
+### Features
+
+* add private endpoint integration ([#90](https://github.com/aztfmods/module-azurerm-sa/issues/90)) ([4cd3294](https://github.com/aztfmods/module-azurerm-sa/commit/4cd32944634639cef9dfc83598c3a131c7b93966))
+
 ## [1.15.0](https://github.com/aztfmods/module-azurerm-sa/compare/v1.14.0...v1.15.0) (2023-05-12)
 
 
