@@ -10,7 +10,7 @@ module "global" {
   region  = "weu"
 
   rgs = {
-    demo2 = { location = "westeurope" }
+    demo = { location = "westeurope" }
   }
 }
 
@@ -22,8 +22,8 @@ module "network" {
   region  = module.global.region
 
   vnet = {
-    location      = module.global.groups.demo2.location
-    resourcegroup = module.global.groups.demo2.name
+    location      = module.global.groups.demo.location
+    resourcegroup = module.global.groups.demo.name
     cidr          = ["10.18.0.0/16"]
     subnets = {
       plink = { cidr = ["10.18.1.0/24"], enforce_priv_link_endpoint = true }
@@ -32,7 +32,7 @@ module "network" {
   depends_on = [module.global]
 }
 
-module "private_link" {
+module "private_endpoint" {
   source = "github.com/aztfmods/module-azurerm-pep"
 
   company = module.global.company
@@ -40,8 +40,8 @@ module "private_link" {
   region  = module.global.region
 
   endpoint = {
-    location      = module.global.groups.demo2.location
-    resourcegroup = module.global.groups.demo2.name
+    location      = module.global.groups.demo.location
+    resourcegroup = module.global.groups.demo.name
 
     subnet_id    = module.network.subnets.plink.id
     resource_id  = module.storage.sa.id
@@ -67,12 +67,11 @@ module "storage" {
   region  = module.global.region
 
   storage = {
-    location      = module.global.groups.demo2.location
-    resourcegroup = module.global.groups.demo2.name
+    location      = module.global.groups.demo.location
+    resourcegroup = module.global.groups.demo.name
 
     enable = {
-      sftp   = true
-      is_hns = true
+      public_network_access = false
     }
   }
   depends_on = [module.global]
