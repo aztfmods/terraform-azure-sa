@@ -8,6 +8,7 @@ The below features and integrations are made available:
 - management policies using multiple rules
 - terratest is used to validate different integrations
 - advanced threat protection
+- private endpoint support
 
 The below examples shows the usage when consuming the module:
 

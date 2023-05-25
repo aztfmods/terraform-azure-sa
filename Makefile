@@ -18,3 +18,5 @@ queues:
 diagnostic-settings:
 	cd tests && go test -v -timeout 60m -run TestApplyNoError/diagnostic-settings
 
+private-endpoint:
+	cd tests && go test -v -timeout 60m -run TestApplyNoError/private-endpoint
