@@ -16,20 +16,22 @@ The below examples shows the usage when consuming the module:
 
 ```hcl
 module "storage" {
-  source = "../../"
+  source = "github.com/aztfmods/module-azurerm-sa"
 
-  naming = {
-    company = local.naming.company
-    env     = local.naming.env
-    region  = local.naming.region
-  }
+  workload       = var.workload
+  environment    = var.environment
+  location_short = module.region.location_short
 
   storage = {
-    location      = module.global.groups.demo.location
-    resourcegroup = module.global.groups.demo.name
+    location      = module.rg.group.location
+    resourcegroup = module.rg.group.name
+
+    enable = {
+      sftp   = true
+      is_hns = true
     }
   }
-  depends_on = [module.global]
+  depends_on = [module.rg]
 }
 ```
 
@@ -37,17 +39,15 @@ module "storage" {
 
 ```hcl
 module "storage" {
-  source = "../.."
+  source = "github.com/aztfmods/module-azurerm-sa"
 
-  naming = {
-    company = local.naming.company
-    env     = local.naming.env
-    region  = local.naming.region
-  }
+  workload       = var.workload
+  environment    = var.environment
+  location_short = module.region.location_short
 
   storage = {
-    location      = module.rgs.groups.storageeus2.location
-    resourcegroup = module.rgs.groups.storageeus2.name
+    location      = module.rg.group.location
+    resourcegroup = module.rg.group.name
 
     tables = {
       t1 = { name = "table1" }
@@ -61,17 +61,15 @@ module "storage" {
 
 ```hcl
 module "storage" {
-  source = "../.."
+  source = "github.com/aztfmods/module-azurerm-sa"
 
-  naming = {
-    company = local.naming.company
-    env     = local.naming.env
-    region  = local.naming.region
-  }
+  workload       = var.workload
+  environment    = var.environment
+  location_short = module.region.location_short
 
   storage = {
-    location      = module.rgs.groups.storage.location
-    resourcegroup = module.rgs.groups.storage.name
+    location      = module.rg.group.location
+    resourcegroup = module.rg.group.name
 
     queue_properties = {
       logging = {
@@ -105,6 +103,7 @@ module "storage" {
       q2 = { name = "queue2" }
     }
   }
+  depends_on = [module.rg]
 }
 ```
 
@@ -112,15 +111,15 @@ module "storage" {
 
 ```hcl
 module "storage" {
-  source = "../../"
+  source = "github.com/aztfmods/module-azurerm-sa"
 
-  company = module.global.company
-  env     = module.global.env
-  region  = module.global.region
+  workload       = var.workload
+  environment    = var.environment
+  location_short = module.region.location_short
 
   storage = {
-    location      = module.global.groups.demo.location
-    resourcegroup = module.global.groups.demo.name
+    location      = module.rg.group.location
+    resourcegroup = module.rg.group.name
 
     blob_properties = {
       enable = {
@@ -159,7 +158,7 @@ module "storage" {
       sc2 = { name = "sc2", access_type = "blob" }
     }
   }
-  depends_on = [module.global]
+  depends_on = [module.rg]
 }
 ```
 
@@ -167,17 +166,15 @@ module "storage" {
 
 ```hcl
 module "storage" {
-  source = "../../"
+  source = "github.com/aztfmods/module-azurerm-sa"
 
-  naming = {
-    company = local.naming.company
-    env     = local.naming.env
-    region  = local.naming.region
-  }
+  workload       = var.workload
+  environment    = var.environment
+  location_short = module.region.location_short
 
   storage = {
-    location      = module.global.groups.demo.location
-    resourcegroup = module.global.groups.demo.name
+    location      = module.rg.group.location
+    resourcegroup = module.rg.group.name
 
     share_properties = {
       smb = {
@@ -198,17 +195,17 @@ module "storage" {
         }
       }
 
-      policy = {
+     policy = {
         retention_in_days = 8
       }
     }
 
     shares = {
-      fs1 = { name  = "share1", quota = 50 }
-      fs2 = { name  = "share2", quota = 10 }
+      fs1 = { name = "share1", quota = 50 }
+      fs2 = { name = "share2", quota = 10 }
     }
   }
-  depends_on = [module.global]
+  depends_on = [module.rg]
 }
 ```
 
@@ -218,13 +215,13 @@ module "storage" {
 module "storage" {
   source = "../../"
 
-  company = module.global.company
-  env     = module.global.env
-  region  = module.global.region
+  workload       = var.workload
+  environment    = var.environment
+  location_short = module.region.location_short
 
   storage = {
-    location      = module.global.groups.demo.location
-    resourcegroup = module.global.groups.demo.name
+    location      = module.rg.group.location
+    resourcegroup = module.rg.group.name
 
     enable = {
       management_policy = true
@@ -295,7 +292,7 @@ module "storage" {
       }
     }
   }
-  depends_on = [module.global]
+  depends_on = [module.rg]
 }
 ```
 
@@ -318,9 +315,9 @@ module "storage" {
 | Name | Description | Type | Required |
 | :-- | :-- | :-- | :-- |
 | `storage` | describes storage related configuration | object | yes |
-| `company` | contains the company name used, for naming convention	| string | yes |
-| `region` | contains the shortname of the region, used for naming convention	| string | yes |
-| `env` | contains shortname of the environment used for naming convention	| string | yes |
+| `workload` | contains the workload name used, for naming convention	| string | yes |
+| `location_short` | contains the shortname of the region, used for naming convention	| string | yes |
+| `environment` | contains shortname of the environment used for naming convention	| string | yes |
 
 ## Outputs
 
@@ -335,7 +332,7 @@ Before running these tests, ensure that both Go and Terraform are installed on y
 
 ## Authors
 
-Module is maintained by [Dennis Kool](https://github.com/dkooll) with help from [these awesome contributors](https://github.com/aztfmods/module-azurerm-sa/graphs/contributors).
+Module is maintained by [Dennis Kool](https://github.com/dkooll)
 
 ## License
 
