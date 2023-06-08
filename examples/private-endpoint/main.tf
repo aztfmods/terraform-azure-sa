@@ -8,7 +8,7 @@ module "region" {
   workload    = var.workload
   environment = var.environment
 
-  location = "westeurope"
+  location = "eastus"
 }
 
 module "rg" {
