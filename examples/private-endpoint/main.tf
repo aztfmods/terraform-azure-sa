@@ -2,46 +2,52 @@ provider "azurerm" {
   features {}
 }
 
-module "global" {
-  source = "github.com/aztfmods/module-azurerm-global"
+module "region" {
+  source = "github.com/aztfmods/module-azurerm-regions"
 
-  company = "cn"
-  env     = "p"
-  region  = "weu"
+  workload    = var.workload
+  environment = var.environment
 
-  rgs = {
-    demo = { location = "westeurope" }
-  }
+  location = "westeurope"
+}
+
+module "rg" {
+  source = "github.com/aztfmods/module-azurerm-rg"
+
+  workload       = var.workload
+  environment    = var.environment
+  location_short = module.region.location_short
+  location       = module.region.location
 }
 
 module "network" {
   source = "github.com/aztfmods/module-azurerm-vnet"
 
-  company = module.global.company
-  env     = module.global.env
-  region  = module.global.region
+  workload       = var.workload
+  environment    = var.environment
+  location_short = module.region.location_short
 
   vnet = {
-    location      = module.global.groups.demo.location
-    resourcegroup = module.global.groups.demo.name
+    location      = module.rg.group.location
+    resourcegroup = module.rg.group.name
     cidr          = ["10.18.0.0/16"]
     subnets = {
       plink = { cidr = ["10.18.1.0/24"], enforce_priv_link_endpoint = true }
     }
   }
-  depends_on = [module.global]
+  depends_on = [module.rg]
 }
 
 module "private_endpoint" {
   source = "github.com/aztfmods/module-azurerm-pep"
 
-  company = module.global.company
-  env     = module.global.env
-  region  = module.global.region
+  workload       = var.workload
+  environment    = var.environment
+  location_short = module.region.location_short
 
   endpoint = {
-    location      = module.global.groups.demo.location
-    resourcegroup = module.global.groups.demo.name
+    location      = module.rg.group.location
+    resourcegroup = module.rg.group.name
 
     subnet_id    = module.network.subnets.plink.id
     resource_id  = module.storage.sa.id
@@ -56,24 +62,23 @@ module "private_endpoint" {
       }
     }
   }
-  depends_on = [module.global]
+  depends_on = [module.rg]
 }
 
 module "storage" {
   source = "../../"
 
-  company = module.global.company
-  env     = module.global.env
-  region  = module.global.region
+  workload       = var.workload
+  environment    = var.environment
+  location_short = module.region.location_short
 
   storage = {
-    location      = module.global.groups.demo.location
-    resourcegroup = module.global.groups.demo.name
+    location      = module.rg.group.location
+    resourcegroup = module.rg.group.name
 
     enable = {
       public_network_access = false
     }
   }
-  depends_on = [module.global]
+  depends_on = [module.rg]
 }
-

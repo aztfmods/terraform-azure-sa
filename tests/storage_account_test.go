@@ -1,6 +1,7 @@
 package main
 
 import (
+	"os"
 	"testing"
 
 	"github.com/aztfmods/module-azurerm-sa/shared"
@@ -11,12 +12,7 @@ func TestApplyNoError(t *testing.T) {
 	t.Parallel()
 
 	tests := []shared.TestCase{
-		{Name: "simple", Path: "../examples/simple"},
-		{Name: "shares", Path: "../examples/shares"},
-		{Name: "containers-blob", Path: "../examples/containers-blob"},
-		{Name: "management-policies", Path: "../examples/management-policies"},
-		{Name: "diagnostic-settings", Path: "../examples/diagnostic-settings"},
-		{Name: "queues", Path: "../examples/queues"},
+		{Name: os.Getenv("USECASE"), Path: "../examples/" + os.Getenv("USECASE")},
 	}
 
 	for _, test := range tests {
