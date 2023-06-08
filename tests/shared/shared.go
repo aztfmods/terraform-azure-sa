@@ -25,7 +25,7 @@ func GetTerraformOptions(terraformDir string) *terraform.Options {
 	return &terraform.Options{
 		TerraformDir: terraformDir,
 		NoColor:      true,
-		Parallelism:  1,
+		Parallelism:  20,
 		Vars: map[string]interface{}{
 			"workload":    workload,
 			"environment": environment,
