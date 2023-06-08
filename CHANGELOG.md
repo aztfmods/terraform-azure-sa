@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.17.0](https://github.com/aztfmods/module-azurerm-sa/compare/v1.16.0...v1.17.0) (2023-06-08)
+
+
+### Features
+
+* refactor regions and tests ([#94](https://github.com/aztfmods/module-azurerm-sa/issues/94)) ([6d8fe68](https://github.com/aztfmods/module-azurerm-sa/commit/6d8fe681a00a0bf588f4f2db6acda7dcce9bd1bd))
+* update documentation ([#96](https://github.com/aztfmods/module-azurerm-sa/issues/96)) ([195dc4d](https://github.com/aztfmods/module-azurerm-sa/commit/195dc4db4993445590be1788a66d83b85d76a92f))
+
 ## [1.16.0](https://github.com/aztfmods/module-azurerm-sa/compare/v1.15.0...v1.16.0) (2023-05-25)
 
 
