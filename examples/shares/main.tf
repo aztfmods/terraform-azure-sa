@@ -2,28 +2,34 @@ provider "azurerm" {
   features {}
 }
 
-module "global" {
-  source = "github.com/aztfmods/module-azurerm-global"
+module "region" {
+  source = "github.com/aztfmods/module-azurerm-regions"
 
-  company = "cn"
-  env     = "p"
-  region  = "weu"
+  workload    = var.workload
+  environment = var.environment
 
-  rgs = {
-    demo = { location = "westeurope" }
-  }
+  location = "westeurope"
+}
+
+module "rg" {
+  source = "github.com/aztfmods/module-azurerm-rg"
+
+  workload       = var.workload
+  environment    = var.environment
+  location_short = module.region.location_short
+  location       = module.region.location
 }
 
 module "storage" {
   source = "../../"
 
-  company = module.global.company
-  env     = module.global.env
-  region  = module.global.region
+  workload       = var.workload
+  environment    = var.environment
+  location_short = module.region.location_short
 
   storage = {
-    location      = module.global.groups.demo.location
-    resourcegroup = module.global.groups.demo.name
+    location      = module.rg.group.location
+    resourcegroup = module.rg.group.name
 
     share_properties = {
       smb = {
@@ -50,10 +56,10 @@ module "storage" {
     }
 
     shares = {
-      fs1 = { name  = "share1", quota = 50 }
-      fs2 = { name  = "share2", quota = 10 }
+      fs1 = { name = "share1", quota = 50 }
+      fs2 = { name = "share2", quota = 10 }
     }
   }
-  depends_on = [module.global]
+  depends_on = [module.rg]
 }
 

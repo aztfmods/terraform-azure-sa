@@ -9,7 +9,7 @@ resource "random_string" "random" {
 
 # storage accounts
 resource "azurerm_storage_account" "sa" {
-  name                     = "sa${var.company}${var.env}${var.region}${random_string.random.result}"
+  name                     = "sa${var.workload}${var.environment}${var.location_short}${random_string.random.result}"
   resource_group_name      = var.storage.resourcegroup
   location                 = var.storage.location
   account_tier             = try(var.storage.sku.tier, "Standard")

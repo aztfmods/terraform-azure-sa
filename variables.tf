@@ -1,4 +1,4 @@
 variable "storage" {}
-variable "company" {}
-variable "region" {}
-variable "env" {}
+variable "location_short" {}
+variable "workload" {}
+variable "environment" {}
