@@ -2,37 +2,35 @@ provider "azurerm" {
   features {}
 }
 
-module "region" {
-  source = "github.com/aztfmods/module-azurerm-regions"
-
-  workload    = var.workload
-  environment = var.environment
-
-  location = "westeurope"
-}
-
 module "rg" {
   source = "github.com/aztfmods/module-azurerm-rg"
 
-  workload       = var.workload
-  environment    = var.environment
-  location_short = module.region.location_short
-  location       = module.region.location
+  environment = var.environment
+
+  groups = {
+    demo = {
+      region = "westeurope"
+    }
+  }
 }
 
 module "network" {
   source = "github.com/aztfmods/module-azurerm-vnet"
 
-  workload       = var.workload
-  environment    = var.environment
-  location_short = module.region.location_short
+  workload    = var.workload
+  environment = var.environment
 
   vnet = {
-    location      = module.rg.group.location
-    resourcegroup = module.rg.group.name
+    location      = module.rg.groups.demo.location
+    resourcegroup = module.rg.groups.demo.name
     cidr          = ["10.18.0.0/16"]
+
     subnets = {
-      plink = { cidr = ["10.18.1.0/24"], enforce_priv_link_endpoint = true }
+      plink = {
+        cidr = ["10.18.1.0/24"]
+
+        enforce_priv_link_endpoint = true
+      }
     }
   }
   depends_on = [module.rg]
@@ -41,13 +39,12 @@ module "network" {
 module "private_endpoint" {
   source = "github.com/aztfmods/module-azurerm-pep"
 
-  workload       = var.workload
-  environment    = var.environment
-  location_short = module.region.location_short
+  workload    = var.workload
+  environment = var.environment
 
   endpoint = {
-    location      = module.rg.group.location
-    resourcegroup = module.rg.group.name
+    location      = module.rg.groups.demo.location
+    resourcegroup = module.rg.groups.demo.name
 
     subnet_id    = module.network.subnets.plink.id
     resource_id  = module.storage.sa.id
@@ -68,13 +65,12 @@ module "private_endpoint" {
 module "storage" {
   source = "../../"
 
-  workload       = var.workload
-  environment    = var.environment
-  location_short = module.region.location_short
+  workload    = var.workload
+  environment = var.environment
 
   storage = {
-    location      = module.rg.group.location
-    resourcegroup = module.rg.group.name
+    location      = module.rg.groups.demo.location
+    resourcegroup = module.rg.groups.demo.name
 
     enable = {
       public_network_access = false
