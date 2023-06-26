@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.17.1](https://github.com/aztfmods/module-azurerm-sa/compare/v1.17.0...v1.17.1) (2023-06-26)
+
+
+### Bug Fixes
+
+* **dependencies:** bump github.com/gruntwork-io/terratest in /tests ([#97](https://github.com/aztfmods/module-azurerm-sa/issues/97)) ([f7ac958](https://github.com/aztfmods/module-azurerm-sa/commit/f7ac958a69ead03c7276b1f1aa49f5abac0fe088))
+
 ## [1.17.0](https://github.com/aztfmods/module-azurerm-sa/compare/v1.16.0...v1.17.0) (2023-06-08)
 
 
