@@ -3,7 +3,7 @@ provider "azurerm" {
 }
 
 module "rg" {
-  source = "github.com/aztfmods/terraform-azure-rg"
+  source = "github.com/aztfmods/terraform-azure-rg?ref=v0.1.0"
 
   environment = var.environment
 
@@ -15,7 +15,7 @@ module "rg" {
 }
 
 module "network" {
-  source = "github.com/aztfmods/terraform-azure-vnet"
+  source = "github.com/aztfmods/terraform-azure-vnet?ref=v1.13.0"
 
   workload    = var.workload
   environment = var.environment
@@ -37,7 +37,7 @@ module "network" {
 }
 
 module "private_endpoint" {
-  source = "github.com/aztfmods/terraform-azure-pep"
+  source = "github.com/aztfmods/terraform-azure-pep?ref=v1.0.0"
 
   workload    = var.workload
   environment = var.environment
@@ -63,7 +63,7 @@ module "private_endpoint" {
 }
 
 module "storage" {
-  source = "../../"
+  source = "github.com/aztfmods/terraform-azure-sa?ref=v1.17.1"
 
   workload    = var.workload
   environment = var.environment
