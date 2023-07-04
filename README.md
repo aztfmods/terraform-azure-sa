@@ -2,13 +2,21 @@
 
 This terraform module simplifies the process of creating and managing storage accounts on azure with customizable options and features, offering a flexible and powerful solution for managing azure storage through code.
 
-The below features and integrations are made available:
+## Goals
 
-- shares, tables, containers, queues support
-- management policies using multiple rules
-- terratest is used to validate different integrations
-- advanced threat protection
-- private endpoint support
+The main objective is to create a more logic data structure, achieved by combining and grouping related resources together in a complex object.
+
+The structure of the module promotes reusability. It's intended to be a repeatable component, simplifying the process of building diverse workloads and platform accelerators consistently.
+
+A key objective is to employ keys and values within the object that align with the REST API's structure. This paves the way for multiple iterations and expansions, enriching its practical application over time.
+
+## Features
+
+- offers support for shares, tables, containers, and queues.
+- employs management policies using a variety of rules.
+- utilizes Terratest to authenticate a range of integrations.
+- provides advanced threat protection capabilities.
+- facilitates support for private endpoints.
 
 The below examples shows the usage when consuming the module:
 
@@ -16,15 +24,14 @@ The below examples shows the usage when consuming the module:
 
 ```hcl
 module "storage" {
-  source = "github.com/aztfmods/module-azurerm-sa"
+  source = "github.com/aztfmods/terraform-azure-sa?ref=v1.17.1"
 
-  workload       = var.workload
-  environment    = var.environment
-  location_short = module.region.location_short
+  workload    = var.workload
+  environment = var.environment
 
   storage = {
-    location      = module.rg.group.location
-    resourcegroup = module.rg.group.name
+    location      = module.rg.groups.demo.location
+    resourcegroup = module.rg.groups.demo.name
 
     enable = {
       sftp   = true
@@ -39,21 +46,21 @@ module "storage" {
 
 ```hcl
 module "storage" {
-  source = "github.com/aztfmods/module-azurerm-sa"
+  source = "github.com/aztfmods/terraform-azure-sa?ref=v1.17.1"
 
-  workload       = var.workload
-  environment    = var.environment
-  location_short = module.region.location_short
+  workload    = var.workload
+  environment = var.environment
 
   storage = {
-    location      = module.rg.group.location
-    resourcegroup = module.rg.group.name
+    location      = module.rg.groups.demo.location
+    resourcegroup = module.rg.groups.demo.name
 
     tables = {
       t1 = { name = "table1" }
       t2 = { name = "table2" }
     }
   }
+  depends_on = [module.rg]
 }
 ```
 
