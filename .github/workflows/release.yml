@@ -1,4 +1,5 @@
 name: release-please
+
 on:
   push:
     branches:
@@ -8,4 +9,4 @@ on:
 jobs:
   release_please:
     name: release
-    uses: aztfmods/module-azurerm-global/.github/workflows/release.yml@main
+    uses: aztfmods/workflows-shared/.github/workflows/release.yml@main

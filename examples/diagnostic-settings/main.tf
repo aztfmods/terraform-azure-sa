@@ -2,20 +2,8 @@ provider "azurerm" {
   features {}
 }
 
-module "global" {
-  source = "github.com/aztfmods/module-azurerm-global"
-
-  company = "cn"
-  env     = "p"
-  region  = "weu"
-
-  rgs = {
-    demo = { location = "westeurope" }
-  }
-}
-
 module "logging" {
-  source = "github.com/aztfmods/module-azurerm-law"
+  source = "github.com/aztfmods/module-azurerm-law?ref=v0.1.0"
 
   company = module.global.company
   env     = module.global.env
@@ -33,7 +21,7 @@ module "logging" {
 }
 
 module "storage" {
-  source = "../../"
+  source = "github.com/aztfmods/module-azurerm-storage?ref=v0.1.0"
 
   company = module.global.company
   env     = module.global.env
@@ -58,7 +46,7 @@ module "storage" {
 }
 
 module "diagnostic_settings" {
-  source = "github.com/aztfmods/module-azurerm-diags"
+  source = "github.com/aztfmods/module-azurerm-diags?ref=v0.1.0"
   count  = length(module.storage.merged_ids)
 
   resource_id           = element(module.storage.merged_ids, count.index)
