@@ -8,15 +8,15 @@ The main objective is to create a more logic data structure, achieved by combini
 
 The structure of the module promotes reusability. It's intended to be a repeatable component, simplifying the process of building diverse workloads and platform accelerators consistently.
 
-A key objective is to employ keys and values within the object that align with the REST API's structure. This paves the way for multiple iterations and expansions, enriching its practical application over time.
+A primary goal is to utilize keys and values in the object that correspond to the REST API's structure. This enables us to carry out iterations, increasing its practical value as time goes on.
 
 ## Features
 
 - offers support for shares, tables, containers, and queues.
 - employs management policies using a variety of rules.
-- utilizes Terratest to authenticate a range of integrations.
 - provides advanced threat protection capabilities.
 - facilitates support for private endpoints.
+- utilization of terratest for robust validation.
 
 The below examples shows the usage when consuming the module:
 
@@ -68,15 +68,14 @@ module "storage" {
 
 ```hcl
 module "storage" {
-  source = "github.com/aztfmods/module-azurerm-sa"
+  source = "github.com/aztfmods/terraform-azure-sa?ref=v1.17.1"
 
-  workload       = var.workload
-  environment    = var.environment
-  location_short = module.region.location_short
+  workload    = var.workload
+  environment = var.environment
 
   storage = {
-    location      = module.rg.group.location
-    resourcegroup = module.rg.group.name
+    location      = module.rg.groups.demo.location
+    resourcegroup = module.rg.groups.demo.name
 
     queue_properties = {
       logging = {
@@ -118,15 +117,14 @@ module "storage" {
 
 ```hcl
 module "storage" {
-  source = "github.com/aztfmods/module-azurerm-sa"
+  source = "github.com/aztfmods/terraform-azure-sa?ref=v1.17.1"
 
-  workload       = var.workload
-  environment    = var.environment
-  location_short = module.region.location_short
+  workload    = var.workload
+  environment = var.environment
 
   storage = {
-    location      = module.rg.group.location
-    resourcegroup = module.rg.group.name
+    location      = module.rg.groups.demo.location
+    resourcegroup = module.rg.groups.demo.name
 
     blob_properties = {
       enable = {
@@ -173,15 +171,14 @@ module "storage" {
 
 ```hcl
 module "storage" {
-  source = "github.com/aztfmods/module-azurerm-sa"
+  source = "github.com/aztfmods/terraform-azure-sa?ref=v1.17.1"
 
-  workload       = var.workload
-  environment    = var.environment
-  location_short = module.region.location_short
+  workload    = var.workload
+  environment = var.environment
 
   storage = {
-    location      = module.rg.group.location
-    resourcegroup = module.rg.group.name
+    location      = module.rg.groups.demo.location
+    resourcegroup = module.rg.groups.demo.name
 
     share_properties = {
       smb = {
@@ -202,7 +199,7 @@ module "storage" {
         }
       }
 
-     policy = {
+      policy = {
         retention_in_days = 8
       }
     }
@@ -220,15 +217,14 @@ module "storage" {
 
 ```hcl
 module "storage" {
-  source = "../../"
+  source = "github.com/aztfmods/terraform-azure-sa?ref=v1.17.1"
 
-  workload       = var.workload
-  environment    = var.environment
-  location_short = module.region.location_short
+  workload    = var.workload
+  environment = var.environment
 
   storage = {
-    location      = module.rg.group.location
-    resourcegroup = module.rg.group.name
+    location      = module.rg.groups.demo.location
+    resourcegroup = module.rg.groups.demo.name
 
     enable = {
       management_policy = true
@@ -323,7 +319,6 @@ module "storage" {
 | :-- | :-- | :-- | :-- |
 | `storage` | describes storage related configuration | object | yes |
 | `workload` | contains the workload name used, for naming convention	| string | yes |
-| `location_short` | contains the shortname of the region, used for naming convention	| string | yes |
 | `environment` | contains shortname of the environment used for naming convention	| string | yes |
 
 ## Outputs
@@ -333,9 +328,18 @@ module "storage" {
 | `sa` | contains all storage accounts |
 
 ## Testing
-This GitHub repository features a [Makefile](./Makefile) tailored for testing various configurations. Each test target corresponds to different example use cases provided within the repository.
 
-Before running these tests, ensure that both Go and Terraform are installed on your system. To execute a specific test, use the following command ```make <test-target>```
+The github repository utilizes a Makefile to conduct tests to evaluate and validate different configurations of the module. These tests are designed to enhance its stability and reliability.
+
+Before initiating the tests, please ensure that both go and terraform are properly installed on your system.
+
+The [Makefile](Makefile) incorporates three distinct test variations. The first one, a local deployment test, is designed for local deployments and allows the overriding of workload and environment values. It includes additional checks and can be initiated using the command ```make test_local```.
+
+The second variation is an extended test. This test performs additional validations and serves as the default test for the module within the github workflow.
+
+The third variation allows for specific deployment tests. By providing a unique test name in the github workflow, it overrides the default extended test, executing the specific deployment test instead.
+
+Each of these tests contributes to the robustness and resilience of the module. They ensure the module performs consistently and accurately under different scenarios and configurations.
 
 ## Authors
 
@@ -343,7 +347,7 @@ Module is maintained by [Dennis Kool](https://github.com/dkooll)
 
 ## License
 
-MIT Licensed. See [LICENSE](https://github.com/aztfmods/module-azurerm-vnet/blob/main/LICENSE) for full details.
+MIT Licensed. See [LICENSE](https://github.com/aztfmods/terraform-azure-sa/blob/main/LICENSE) for full details.
 
 ## References
 
