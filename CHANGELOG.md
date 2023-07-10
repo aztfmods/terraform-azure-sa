@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.18.0](https://github.com/aztfmods/terraform-azure-sa/compare/v1.17.1...v1.18.0) (2023-07-10)
+
+
+### Features
+
+* **deps:** bump google.golang.org/grpc from 1.51.0 to 1.53.0 in /tests ([#101](https://github.com/aztfmods/terraform-azure-sa/issues/101)) ([466b4e5](https://github.com/aztfmods/terraform-azure-sa/commit/466b4e57e768448da10afc04d2e99e69a8277f83))
+* solve linting issues and updated documentation ([#99](https://github.com/aztfmods/terraform-azure-sa/issues/99)) ([61e176a](https://github.com/aztfmods/terraform-azure-sa/commit/61e176aa01b940dfb3f693c165719b765757a873))
+
 ## [1.17.1](https://github.com/aztfmods/module-azurerm-sa/compare/v1.17.0...v1.17.1) (2023-06-26)
 
 
