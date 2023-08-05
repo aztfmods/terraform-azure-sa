@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.19.0](https://github.com/aztfmods/terraform-azure-sa/compare/v1.18.0...v1.19.0) (2023-08-05)
+
+
+### Features
+
+* **deps:** Bump github.com/gruntwork-io/terratest from 0.43.6 to 0.43.11 in /tests ([#105](https://github.com/aztfmods/terraform-azure-sa/issues/105)) ([1f8bd5f](https://github.com/aztfmods/terraform-azure-sa/commit/1f8bd5f84130045122ae93044ec996de838f1311))
+
 ## [1.18.0](https://github.com/aztfmods/terraform-azure-sa/compare/v1.17.1...v1.18.0) (2023-07-10)
 
 
