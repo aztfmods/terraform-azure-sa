@@ -61,5 +61,4 @@ module "storage" {
       sc2 = { name = "sc2", access_type = "blob" }
     }
   }
-  depends_on = [module.rg]
 }

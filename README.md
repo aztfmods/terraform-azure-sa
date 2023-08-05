@@ -10,6 +10,8 @@ The structure of the module promotes reusability. It's intended to be a repeatab
 
 A primary goal is to utilize keys and values in the object that correspond to the REST API's structure. This enables us to carry out iterations, increasing its practical value as time goes on.
 
+A last key goal is to separate logic from configuration in the module, thereby enhancing its scalability, ease of customization, and manageability.
+
 ## Features
 
 - offers support for shares, tables, containers, and queues.
@@ -38,7 +40,6 @@ module "storage" {
       is_hns = true
     }
   }
-  depends_on = [module.rg]
 }
 ```
 
@@ -60,7 +61,6 @@ module "storage" {
       t2 = { name = "table2" }
     }
   }
-  depends_on = [module.rg]
 }
 ```
 
@@ -109,7 +109,6 @@ module "storage" {
       q2 = { name = "queue2" }
     }
   }
-  depends_on = [module.rg]
 }
 ```
 
@@ -163,7 +162,6 @@ module "storage" {
       sc2 = { name = "sc2", access_type = "blob" }
     }
   }
-  depends_on = [module.rg]
 }
 ```
 
@@ -209,7 +207,6 @@ module "storage" {
       fs2 = { name = "share2", quota = 10 }
     }
   }
-  depends_on = [module.rg]
 }
 ```
 
@@ -295,7 +292,6 @@ module "storage" {
       }
     }
   }
-  depends_on = [module.rg]
 }
 ```
 

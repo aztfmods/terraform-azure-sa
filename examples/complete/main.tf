@@ -195,5 +195,4 @@ module "storage" {
       fs2 = { name = "smbfileshare2", quota = 10 }
     }
   }
-  depends_on = [module.rg]
 }

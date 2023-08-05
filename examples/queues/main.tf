@@ -56,5 +56,4 @@ module "storage" {
       q2 = { name = "queue2" }
     }
   }
-  depends_on = [module.rg]
 }

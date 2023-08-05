@@ -29,6 +29,4 @@ module "storage" {
       is_hns = true
     }
   }
-  depends_on = [module.rg]
 }
-

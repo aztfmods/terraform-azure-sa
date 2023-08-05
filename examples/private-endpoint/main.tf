@@ -76,5 +76,4 @@ module "storage" {
       public_network_access = false
     }
   }
-  depends_on = [module.rg]
 }
